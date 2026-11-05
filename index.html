@@ -76,7 +76,7 @@
       #gallery-grid { gap:12px; }
       #gallery-more { margin-top:24px; }
       #songs > div,#contact > div { gap:26px; }
-      #gallery-page { padding:84px 22px 40px; }
+      #gallery-page,#projects-page { padding:84px 22px 40px; }
       .reveal { transform:translateY(24px) scale(.985); transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1); }
       .gallery-card:hover { transform:none; }
       #admin-sidebar { position:fixed; z-index:60; inset:0 auto 0 0; width:17rem; transform:translateX(-105%); transition:transform .25s ease; }
@@ -133,6 +133,7 @@
       <div class="mx-auto max-w-6xl">
         <div class="reveal mb-9"><p class="text-xs font-semibold uppercase tracking-[.2em] text-yellow-400">Karya pilihan</p><h2 id="projects-heading" class="serif mt-2 text-3xl font-bold sm:text-4xl">Proyek yang Pernah Saya Kerjakan</h2><p id="projects-description" class="mt-3 max-w-2xl text-sm leading-6 text-gray-400">Beberapa proyek dan pengalaman yang pernah saya kerjakan.</p></div>
         <div id="projects-grid" class="grid gap-5 md:grid-cols-2 lg:grid-cols-3"></div>
+        <a id="projects-more" href="#projects-all" class="mx-auto mt-8 hidden w-fit rounded-full border border-yellow-500/60 px-5 py-2.5 text-xs text-yellow-400 transition hover:bg-yellow-400 hover:text-gray-950">Lihat proyek lainnya ↗</a>
       </div>
     </section>
 
@@ -168,6 +169,13 @@
         <a href="#gallery" class="mb-8 inline-flex items-center gap-2 text-sm text-yellow-400 transition hover:text-yellow-300">← Kembali ke beranda</a>
         <div class="reveal mb-9"><p class="text-xs font-semibold uppercase tracking-[.2em] text-yellow-400">Semua momen</p><h1 id="gallery-page-heading" class="serif mt-2 text-3xl font-bold sm:text-4xl">Galeri Foto</h1><p id="gallery-page-count" class="mt-3 text-sm text-gray-400"></p></div>
         <div id="gallery-all-grid" class="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4"></div>
+      </div>
+    </section>
+    <section id="projects-page" class="page-section hidden-view min-h-screen px-5 pb-14 pt-28">
+      <div class="mx-auto max-w-6xl">
+        <a href="#projects" class="mb-8 inline-flex items-center gap-2 text-sm text-yellow-400 transition hover:text-yellow-300">← Kembali ke beranda</a>
+        <div class="reveal mb-9"><p class="text-xs font-semibold uppercase tracking-[.2em] text-yellow-400">Karya dan pengalaman</p><h1 id="projects-page-heading" class="serif mt-2 text-3xl font-bold sm:text-4xl">Semua Proyek</h1><p id="projects-page-description" class="mt-3 max-w-2xl text-sm leading-6 text-gray-400"></p><p id="projects-page-count" class="mt-3 text-xs text-gray-500"></p></div>
+        <div id="projects-all-grid" class="grid gap-5 md:grid-cols-2 lg:grid-cols-3"></div>
       </div>
     </section>
   </main>
@@ -392,12 +400,24 @@
       observeReveals();
     }
     function renderProjects() {
-      $("#projects-grid").innerHTML=state.projects.map((item,index)=>{
+      $("#projects-grid").innerHTML=projectCards(state.projects.slice(0,6));
+      $("#projects-more").classList.toggle("hidden",state.projects.length<=6);
+      if(location.hash==="#projects-all")renderFullProjects();
+      observeReveals();
+    }
+    function projectCards(items) {
+      return items.map((item,index)=>{
         const image=validUrl(item.image),projectLink=validUrl(item.url);
         const title=esc(item.title),description=esc(item.description),category=esc(item.category);
         const card=`<article class="gallery-card reveal overflow-hidden rounded-xl border border-white/10 bg-[#0c111a]" style="transition-delay:${(index%3)*60}ms">${image?`<div class="aspect-[16/10] overflow-hidden bg-gray-800"><img src="${esc(image)}" alt="${title}" class="h-full w-full object-cover" loading="lazy"></div>`:'<div class="flex aspect-[16/10] items-center justify-center bg-gradient-to-br from-gray-800 to-[#0c111a] text-4xl text-yellow-400/70">✦</div>'}<div class="p-5"><div class="flex items-start justify-between gap-3"><h3 class="serif text-xl font-bold">${title}</h3>${item.year?`<span class="shrink-0 text-xs text-gray-500">${esc(item.year)}</span>`:""}</div>${category?`<p class="mt-1 text-xs font-semibold uppercase tracking-wider text-yellow-400">${category}</p>`:""}<p class="mt-3 text-sm leading-6 text-gray-400">${description}</p>${projectLink?`<a href="${esc(projectLink)}" target="_blank" rel="noreferrer" class="mt-4 inline-flex text-xs font-semibold text-yellow-400 transition hover:text-yellow-300">Lihat proyek ↗</a>`:""}</div></article>`;
         return card;
-      }).join("")||'<p class="reveal col-span-full rounded-xl border border-dashed border-white/15 px-5 py-10 text-center text-sm text-gray-400">Proyek yang pernah dikerjakan akan ditampilkan di sini.</p>';
+      }).join("");
+    }
+    function renderFullProjects() {
+      $("#projects-page-heading").textContent=state.settings.projectsHeading||DEFAULTS.settings.projectsHeading;
+      $("#projects-page-description").textContent=state.settings.projectsDescription||DEFAULTS.settings.projectsDescription;
+      $("#projects-page-count").textContent=state.projects.length+" proyek";
+      $("#projects-all-grid").innerHTML=projectCards(state.projects)||'<p class="reveal col-span-full rounded-xl border border-dashed border-white/15 px-5 py-12 text-center text-sm text-gray-400">Belum ada proyek yang ditambahkan.</p>';
       observeReveals();
     }
     function renderLinks() {
@@ -462,12 +482,15 @@
     async function route() {
       const admin=location.hash==="#admin"||location.hash.startsWith("#admin/");
       const fullGallery=location.hash==="#gallery-all";
+      const fullProjects=location.hash==="#projects-all";
       $("#public-view").classList.toggle("hidden-view",admin);$("#admin-view").classList.toggle("hidden-view",!admin);
       if(admin){$("#login-view").classList.toggle("hidden-view",!!state.token);$("#dashboard-view").classList.toggle("hidden-view",!state.token);if(state.token){$("#admin-user-label").textContent=state.username||"Administrator";return await loadAdminData();}}
       else {
-        $("#home-page-content").classList.toggle("hidden-view",fullGallery);
+        $("#home-page-content").classList.toggle("hidden-view",fullGallery||fullProjects);
         $("#gallery-page").classList.toggle("hidden-view",!fullGallery);
+        $("#projects-page").classList.toggle("hidden-view",!fullProjects);
         if(fullGallery){renderFullGallery();window.scrollTo(0,0);}
+        else if(fullProjects){renderFullProjects();window.scrollTo(0,0);}
         else if(location.hash===""||location.hash==="#"||location.hash==="#home")window.scrollTo(0,0);
       }
       return true;
