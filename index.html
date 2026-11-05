@@ -47,6 +47,12 @@
     .admin-table th { color:#9ca3af; font-size:.68rem; font-weight:600; letter-spacing:.12em; text-transform:uppercase; }
     .modal-bg { background:#000c; backdrop-filter:blur(5px); }
     .toast { animation:toast-in .2s ease-out both; }
+    .sync-screen { position:fixed; inset:0; z-index:200; display:grid; place-items:center; background:radial-gradient(ellipse at 50% 35%,#1d2738 0%,#10141e 55%,#090c12 100%); opacity:1; transition:opacity .4s ease; }
+    .sync-screen.leaving { opacity:0; pointer-events:none; }
+    .sync-spinner { width:3.25rem; height:3.25rem; border:2px solid rgba(255,255,255,.14); border-top-color:var(--gold); border-right-color:rgba(234,179,8,.45); border-radius:50%; animation:sync-spin .9s linear infinite; }
+    .sync-mark { position:absolute; inset:0; display:grid; place-items:center; color:var(--gold); font-size:.85rem; }
+    @keyframes sync-spin { to { transform:rotate(360deg); } }
+    @keyframes sync-pulse { 50% { opacity:.45; } }
     @keyframes toast-in { from { opacity:0; transform:translateY(-8px); } to { opacity:1; transform:translateY(0); } }
     .hidden-view { display:none!important; }
     @media(max-width:767px) {
@@ -60,6 +66,14 @@
   </style>
 </head>
 <body>
+  <div id="initial-loader" class="sync-screen" role="status" aria-live="polite">
+    <div class="flex flex-col items-center px-6 text-center">
+      <div class="relative"><div class="sync-spinner"></div><span class="sync-mark">Z</span></div>
+      <p class="mt-6 text-xs font-semibold tracking-[.28em] text-yellow-400">ZAKI ANSYARI</p>
+      <p id="sync-status" class="mt-3 text-sm text-gray-300">Menghubungkan ke Google Sheets...</p>
+      <p class="mt-2 text-xs text-gray-500" style="animation:sync-pulse 1.4s ease-in-out infinite">Menyiapkan portofolio Anda</p>
+    </div>
+  </div>
   <div id="toast-root" class="fixed right-4 top-4 z-[120] flex max-w-sm flex-col gap-2" aria-live="polite"></div>
   <main id="public-view">
     <header class="site-nav fixed inset-x-0 top-0 z-40 h-[66px]">
@@ -245,11 +259,24 @@
       const el=document.createElement("div");el.className="toast rounded-lg border px-4 py-3 text-sm shadow-lg "+(error?"border-red-300/20 bg-[#241417] text-red-100":"border-emerald-300/20 bg-[#111c18] text-gray-100");
       el.textContent=message;$("#toast-root").append(el);setTimeout(()=>el.remove(),4000);
     }
+    function setSyncStatus(message) {
+      $("#sync-status").textContent=message;
+    }
+    function hideInitialLoader(message) {
+      setSyncStatus(message);
+      const loader=$("#initial-loader");
+      loader.classList.add("leaving");
+      window.setTimeout(()=>loader.remove(),450);
+    }
     async function api(action,details={}) {
       if(!API_ENABLED) throw new Error("Admin tersedia setelah website di-deploy ke Vercel dan APPS_SCRIPT_URL dikonfigurasi.");
       let response;
-      try { response=await fetch(API_URL,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({action,token:state.token,...details})}); }
-      catch { throw new Error("Tidak dapat menghubungi Google Apps Script. Periksa URL dan deployment Web App."); }
+      const controller=new AbortController(),timeout=window.setTimeout(()=>controller.abort(),15000);
+      try { response=await fetch(API_URL,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({action,token:state.token,...details}),signal:controller.signal}); }
+      catch(error) {
+        if(error.name==="AbortError")throw new Error("Sinkronisasi melewati batas waktu. Periksa koneksi Google Sheets.");
+        throw new Error("Tidak dapat menghubungi Google Apps Script. Periksa URL dan deployment Web App.");
+      } finally { window.clearTimeout(timeout); }
       let result;try{result=await response.json();}catch{throw new Error("Respons Apps Script tidak valid. Periksa URL /exec dan izin deployment.");}
       if(!response.ok) throw new Error(result.error||"Server merespons dengan status "+response.status+".");
       if(!result.ok) throw new Error(result.error||"Permintaan tidak berhasil.");
@@ -334,7 +361,8 @@
       for(const [key,value] of Object.entries(s)){const input=form.elements.namedItem(key);if(!input)continue;if(input.type==="checkbox")input.checked=Boolean(value);else input.value=value??"";}
     }
     async function loadPublicData() {
-      if(!API_ENABLED)return;
+      if(!API_ENABLED)return true;
+      setSyncStatus("Menyinkronkan konten dengan Google Sheets...");
       try {
         const data=await api("publicData");
         if(data.settings&&typeof data.settings==="object")state.settings={...state.settings,...data.settings};
@@ -342,7 +370,11 @@
         if(Array.isArray(data.gallery))state.gallery=data.gallery;
         if(Array.isArray(data.links))state.links=data.links;
         applySettings();
-      } catch(error) { console.warn("Konten Google Sheets tidak dapat dimuat; menampilkan konten bawaan.",error.message); }
+        return true;
+      } catch(error) {
+        console.warn("Konten Google Sheets tidak dapat dimuat; menampilkan konten bawaan.",error.message);
+        return false;
+      }
     }
     async function loadAdminData() {
       try {
@@ -354,17 +386,20 @@
         if(Array.isArray(data.messages))state.messages=data.messages;
         $("#connection-status").textContent="Terhubung";$("#connection-status").className="mt-3 text-lg font-semibold text-emerald-300";
         applySettings();fillSettingsForm();renderAdminTables();
+        return true;
       } catch(error) {
         $("#connection-status").textContent="Terputus";$("#connection-status").className="mt-3 text-lg font-semibold text-red-300";
-        if(/sesi|session|token|login|expired/i.test(error.message)){logout(false);toast("Sesi admin berakhir, silakan masuk kembali.",true);return;}
+        if(/sesi|session|token|login|expired/i.test(error.message)){logout(false);toast("Sesi admin berakhir, silakan masuk kembali.",true);return false;}
         toast(error.message,true);
+        return false;
       }
     }
-    function route() {
+    async function route() {
       const admin=location.hash==="#admin"||location.hash.startsWith("#admin/");
       $("#public-view").classList.toggle("hidden-view",admin);$("#admin-view").classList.toggle("hidden-view",!admin);
-      if(admin){$("#login-view").classList.toggle("hidden-view",!!state.token);$("#dashboard-view").classList.toggle("hidden-view",!state.token);if(state.token){$("#admin-user-label").textContent=state.username||"Administrator";loadAdminData();}}
+      if(admin){$("#login-view").classList.toggle("hidden-view",!!state.token);$("#dashboard-view").classList.toggle("hidden-view",!state.token);if(state.token){$("#admin-user-label").textContent=state.username||"Administrator";return await loadAdminData();}}
       else if(location.hash===""||location.hash==="#")window.scrollTo(0,0);
+      return true;
     }
     function setPanel(panel) {
       state.panel=panel;
@@ -403,7 +438,15 @@
     function closeEditor(){const modal=$("#item-editor");modal.classList.add("hidden");modal.classList.remove("flex");}
     function logout(message=true){state.token="";state.username="";sessionStorage.removeItem("zaki_admin_token");sessionStorage.removeItem("zaki_admin_user");route();if(message)toast("Anda telah keluar dari admin.");}
     $("#copyright-year").textContent=new Date().getFullYear();
-    applySettings();renderAdminTables();observeReveals();loadPublicData();window.addEventListener("hashchange",route);route();
+    applySettings();renderAdminTables();observeReveals();window.addEventListener("hashchange",route);
+    async function initializePage() {
+      setSyncStatus(API_ENABLED?"Menghubungkan ke Google Sheets...":"Menyiapkan portofolio...");
+      const synced=await loadPublicData();
+      setSyncStatus(synced?"Memuat tampilan website...":"Koneksi tidak tersedia, menyiapkan konten bawaan...");
+      await route();
+      hideInitialLoader(synced?"Portofolio siap":"Portofolio siap dengan konten bawaan");
+    }
+    initializePage();
     $("#mobile-nav-button").addEventListener("click",()=>$("#mobile-nav").classList.toggle("hidden"));
     $("#mobile-nav").querySelectorAll("a").forEach(link=>link.addEventListener("click",()=>$("#mobile-nav").classList.add("hidden")));
     document.querySelectorAll(".admin-link").forEach(button=>button.addEventListener("click",()=>setPanel(button.dataset.panel)));
