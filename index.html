@@ -76,6 +76,7 @@
       #gallery-grid { gap:12px; }
       #gallery-more { margin-top:24px; }
       #songs > div,#contact > div { gap:26px; }
+      #gallery-page { padding:84px 22px 40px; }
       .reveal { transform:translateY(24px) scale(.985); transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1); }
       .gallery-card:hover { transform:none; }
       #admin-sidebar { position:fixed; z-index:60; inset:0 auto 0 0; width:17rem; transform:translateX(-105%); transition:transform .25s ease; }
@@ -111,6 +112,7 @@
       </div>
     </header>
 
+    <div id="home-page-content">
     <section id="home" class="hero-section flex min-h-[620px] items-center px-5 pb-10 pt-24 sm:min-h-[690px]">
       <div class="mx-auto grid w-full max-w-[600px] items-center gap-10 md:w-[75%] md:max-w-[1050px] md:grid-cols-2 md:gap-16">
         <div class="reveal order-2 md:order-1">
@@ -138,7 +140,7 @@
       <div class="mx-auto max-w-6xl">
         <div class="reveal mb-9 flex items-end justify-between gap-4"><div><p class="text-xs font-semibold uppercase tracking-[.2em] text-yellow-400">Pilihan foto</p><h2 id="gallery-heading" class="serif mt-2 text-3xl font-bold sm:text-4xl">My Gallery</h2></div><span class="hidden text-sm text-gray-400 sm:block">Kenangan dan karya saya</span></div>
         <div id="gallery-grid" class="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-3"></div>
-        <a id="gallery-more" href="https://websitezakiansyari.vercel.app/galery-foto-zaki.html" target="_blank" rel="noreferrer" class="mx-auto mt-8 block w-fit rounded-full border border-yellow-500/60 px-5 py-2.5 text-xs text-yellow-400 transition hover:bg-yellow-400 hover:text-gray-950">Lihat foto lainnya ↗</a>
+        <a id="gallery-more" href="#gallery-all" class="mx-auto mt-8 block w-fit rounded-full border border-yellow-500/60 px-5 py-2.5 text-xs text-yellow-400 transition hover:bg-yellow-400 hover:text-gray-950">Lihat galeri lainnya ↗</a>
       </div>
     </section>
 
@@ -160,6 +162,14 @@
       </div>
     </section>
     <footer class="border-t border-white/10 bg-black/30 px-5 py-5"><div class="mx-auto flex max-w-6xl items-center justify-between gap-4 text-xs text-gray-500"><span>© <span id="copyright-year"></span> <span id="footer-name">ZAKI ANSYARI</span></span><a href="#admin" class="transition hover:text-yellow-400">Admin ↗</a></div></footer>
+    </div>
+    <section id="gallery-page" class="page-section hidden-view min-h-screen px-5 pb-14 pt-28">
+      <div class="mx-auto max-w-6xl">
+        <a href="#gallery" class="mb-8 inline-flex items-center gap-2 text-sm text-yellow-400 transition hover:text-yellow-300">← Kembali ke beranda</a>
+        <div class="reveal mb-9"><p class="text-xs font-semibold uppercase tracking-[.2em] text-yellow-400">Semua momen</p><h1 id="gallery-page-heading" class="serif mt-2 text-3xl font-bold sm:text-4xl">Galeri Foto</h1><p id="gallery-page-count" class="mt-3 text-sm text-gray-400"></p></div>
+        <div id="gallery-all-grid" class="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4"></div>
+      </div>
+    </section>
   </main>
 
   <main id="admin-view" class="admin-backdrop hidden-view min-h-screen">
@@ -205,12 +215,12 @@
                   <label class="text-xs text-gray-400">Menu Projects<input class="admin-input mt-2" name="navProjects" maxlength="30"></label>
                   <label class="text-xs text-gray-400">Menu Songs<input class="admin-input mt-2" name="navSongs" maxlength="30"></label><label class="text-xs text-gray-400">Menu Contact<input class="admin-input mt-2" name="navContact" maxlength="30"></label>
                   <label class="text-xs text-gray-400 sm:col-span-2">Kutipan / deskripsi hero<textarea class="admin-input mt-2 min-h-20" name="heroQuote" maxlength="400"></textarea></label>
-                  <label class="text-xs text-gray-400 sm:col-span-2">URL foto profil<input class="admin-input mt-2" name="profileImage" type="url" required></label>
+                  <label class="text-xs text-gray-400 sm:col-span-2">URL foto profil<input class="admin-input mt-2" name="profileImage" type="url" required><span class="mt-2 flex flex-wrap items-center gap-3"><button id="upload-profile-image" class="rounded-lg border border-white/10 px-3 py-2 text-xs text-gray-300 transition hover:border-yellow-400/50" type="button">Pilih gambar dari perangkat</button><input id="profile-image-file" class="hidden" type="file" accept="image/*"><span class="text-[11px] text-gray-500">Maksimal 10 MB</span></span></label>
                   <label class="text-xs text-gray-400">Teks tombol utama<input class="admin-input mt-2" name="primaryButton" maxlength="30"></label><label class="text-xs text-gray-400">Teks tombol galeri<input class="admin-input mt-2" name="secondaryButton" maxlength="30"></label>
                 </div></div>
                 <div class="rounded-xl border border-white/10 bg-[#151a24] p-5"><h3 class="mb-4 text-sm font-semibold text-yellow-400">Galeri, lagu & kontak</h3><div class="grid gap-4 sm:grid-cols-2">
                   <label class="text-xs text-gray-400">Judul proyek<input class="admin-input mt-2" name="projectsHeading" maxlength="100"></label><label class="text-xs text-gray-400">Deskripsi bagian proyek<input class="admin-input mt-2" name="projectsDescription" maxlength="250"></label>
-                  <label class="text-xs text-gray-400">Judul galeri<input class="admin-input mt-2" name="galleryHeading" maxlength="80"></label><label class="text-xs text-gray-400">Tautan galeri lengkap<input class="admin-input mt-2" name="galleryMore" type="url"></label>
+                  <label class="text-xs text-gray-400">Judul galeri<input class="admin-input mt-2" name="galleryHeading" maxlength="80"></label>
                   <label class="text-xs text-gray-400">Judul bagian lagu<input class="admin-input mt-2" name="songsHeading" maxlength="80"></label><label class="text-xs text-gray-400">Keterangan lagu<input class="admin-input mt-2" name="songsCaption" maxlength="160"></label>
                   <label class="text-xs text-gray-400 sm:col-span-2">Kutipan lagu<textarea class="admin-input mt-2 min-h-20" name="songsQuote" maxlength="400"></textarea></label>
                   <label class="text-xs text-gray-400 sm:col-span-2">URL lagu Spotify (track atau embed)<input class="admin-input mt-2" name="spotifyUrl" type="url"></label>
@@ -223,7 +233,7 @@
               </form>
             </section>
             <section id="panel-projects" class="admin-panel hidden-view"><div class="mb-5 flex flex-wrap items-center justify-between gap-3"><div><h2 class="font-semibold">Proyek</h2><p class="mt-1 text-xs text-gray-500">Tambahkan karya yang pernah dikerjakan untuk ditampilkan di atas galeri.</p></div><button id="add-project-item" class="gold-button rounded-lg px-4 py-2.5 text-xs font-bold">＋ Tambah proyek</button></div><div class="overflow-hidden rounded-xl border border-white/10 bg-[#151a24]"><div class="overflow-x-auto"><table class="admin-table w-full min-w-[720px] text-sm"><thead><tr><th>Proyek</th><th>Peran / kategori</th><th>Tahun</th><th>Aksi</th></tr></thead><tbody id="admin-projects-table"></tbody></table></div></div></section>
-            <section id="panel-gallery" class="admin-panel hidden-view"><div class="mb-5 flex flex-wrap items-center justify-between gap-3"><div><h2 class="font-semibold">Galeri foto</h2><p class="mt-1 text-xs text-gray-500">Kelola foto dan teks yang muncul di halaman publik.</p></div><button id="add-gallery-item" class="gold-button rounded-lg px-4 py-2.5 text-xs font-bold">＋ Tambah foto</button></div><div class="overflow-hidden rounded-xl border border-white/10 bg-[#151a24]"><div class="overflow-x-auto"><table class="admin-table w-full min-w-[620px] text-sm"><thead><tr><th>Foto</th><th>Judul</th><th>Deskripsi</th><th>Aksi</th></tr></thead><tbody id="admin-gallery-table"></tbody></table></div></div></section>
+            <section id="panel-gallery" class="admin-panel hidden-view"><div class="mb-5 flex flex-wrap items-center justify-between gap-3"><div><h2 class="font-semibold">Galeri foto</h2><p class="mt-1 text-xs text-gray-500">Kelola foto dan teks yang muncul di halaman publik.</p><p id="gallery-upload-status" class="mt-2 text-xs text-yellow-300" aria-live="polite"></p></div><div class="flex flex-wrap gap-2"><button id="upload-gallery-folder" class="rounded-lg border border-white/15 px-4 py-2.5 text-xs font-bold text-gray-200 transition hover:border-yellow-400/50" type="button">＋ Unggah folder</button><input id="gallery-folder-files" class="hidden" type="file" accept="image/*" multiple webkitdirectory directory><button id="add-gallery-item" class="gold-button rounded-lg px-4 py-2.5 text-xs font-bold">＋ Tambah foto</button></div></div><div class="overflow-hidden rounded-xl border border-white/10 bg-[#151a24]"><div class="overflow-x-auto"><table class="admin-table w-full min-w-[620px] text-sm"><thead><tr><th>Foto</th><th>Judul</th><th>Deskripsi</th><th>Aksi</th></tr></thead><tbody id="admin-gallery-table"></tbody></table></div></div></section>
             <section id="panel-links" class="admin-panel hidden-view"><div class="mb-5 flex flex-wrap items-center justify-between gap-3"><div><h2 class="font-semibold">Tautan tambahan</h2><p class="mt-1 text-xs text-gray-500">Kelola tombol Cloud, Game, dokumen, atau situs lain.</p></div><button id="add-link-item" class="gold-button rounded-lg px-4 py-2.5 text-xs font-bold">＋ Tambah tautan</button></div><div class="overflow-hidden rounded-xl border border-white/10 bg-[#151a24]"><div class="overflow-x-auto"><table class="admin-table w-full min-w-[560px] text-sm"><thead><tr><th>Nama</th><th>URL</th><th>Aksi</th></tr></thead><tbody id="admin-links-table"></tbody></table></div></div></section>
             <section id="panel-messages" class="admin-panel hidden-view"><div class="mb-5 flex flex-wrap items-center justify-between gap-3"><div><h2 class="font-semibold">Pesan dari pengunjung</h2><p class="mt-1 text-xs text-gray-500">Pesan yang dikirim dari formulir Hubungi Saya.</p></div><button id="refresh-messages" class="rounded-lg border border-white/10 px-4 py-2.5 text-xs text-gray-300 transition hover:border-yellow-400/50">↻ Perbarui</button></div><div id="messages-list" class="space-y-3"></div></section>
           </div>
@@ -245,7 +255,7 @@
         heroQuote:"Hari terbesar dalam hidup Anda dan saya adalah ketika kita bertanggung jawab penuh atas sikap kita.",
         profileImage:"assets/profile.jpeg",primaryButton:"HIRE ME",secondaryButton:"GALERY",email:"zakiansyari@gmail.com",
         projectsHeading:"Proyek yang Pernah Saya Kerjakan",projectsDescription:"Beberapa proyek dan pengalaman yang pernah saya kerjakan.",
-        galleryHeading:"My Gallery",galleryMore:"https://websitezakiansyari.vercel.app/galery-foto-zaki.html",
+        galleryHeading:"My Gallery",
         songsHeading:"SONGS ♫",songsQuote:"Tidak perlu memiliki kemampuan atau kekuatan super untuk merasakan cinta. Yang dibutuhkan hanyalah menjadi diri sendiri.",
         songsCaption:"The Chainsmokers & Coldplay - Something Just Like This",
         spotifyUrl:"https://open.spotify.com/embed/track/6RUKPb4LETWmmr3iAEQktW?utm_source=generator",
@@ -304,6 +314,29 @@
       if(!result.ok) throw new Error(result.error||"Permintaan tidak berhasil.");
       return result;
     }
+    async function uploadImage(file,folder) {
+      if(!file||(!file.type.startsWith("image/")&&!/\.(png|jpe?g|gif|webp|avif|svg)$/i.test(file.name))) throw new Error("Pilih file gambar yang valid.");
+      if(file.size>10*1024*1024) throw new Error("Ukuran gambar "+file.name+" melebihi batas 10 MB.");
+      const signature=await api("cloudinarySignature",{folder});
+      const data=new FormData();
+      data.append("file",file);
+      data.append("api_key",signature.apiKey);
+      data.append("timestamp",String(signature.timestamp));
+      data.append("folder",signature.folder);
+      data.append("signature",signature.signature);
+      const controller=new AbortController(),timeout=window.setTimeout(()=>controller.abort(),60000);
+      let response;
+      try {
+        response=await fetch("https://api.cloudinary.com/v1_1/"+encodeURIComponent(signature.cloudName)+"/image/upload",{method:"POST",body:data,signal:controller.signal});
+      } catch(error) {
+        if(error.name==="AbortError") throw new Error("Upload gambar "+file.name+" melewati batas waktu.");
+        throw new Error("Tidak dapat mengunggah "+file.name+" ke Cloudinary. Periksa koneksi internet.");
+      } finally { window.clearTimeout(timeout); }
+      let result;
+      try { result=await response.json(); } catch { throw new Error("Respons Cloudinary tidak valid untuk "+file.name+"."); }
+      if(!response.ok||!result.secure_url) throw new Error(result.error?.message||"Cloudinary gagal mengunggah "+file.name+".");
+      return result.secure_url;
+    }
     function applySettings() {
       const s=state.settings,root=document.documentElement;
       root.style.setProperty("--gold",s.accentColor||DEFAULTS.settings.accentColor);
@@ -322,7 +355,7 @@
       $("#hero-primary").href="#contact";$("#hero-secondary").href="#gallery";
       $("#profile-image").src=validUrl(s.profileImage)||DEFAULTS.settings.profileImage;$("#profile-image").alt="Foto profil "+s.heroName;
       $("#projects-heading").textContent=s.projectsHeading||DEFAULTS.settings.projectsHeading;$("#projects-description").textContent=s.projectsDescription||DEFAULTS.settings.projectsDescription;
-      $("#gallery-heading").textContent=s.galleryHeading;$("#gallery-more").href=validUrl(s.galleryMore)||"#gallery";
+      $("#gallery-heading").textContent=s.galleryHeading;
       $("#songs-heading").textContent=s.songsHeading;$("#songs-quote").textContent=s.songsQuote;$("#songs-caption").textContent=s.songsCaption;
       $("#spotify-frame").src=spotifyEmbed(s.spotifyUrl);
       $("#links-heading").textContent=s.linksHeading;$("#contact-heading").textContent=s.contactHeading;$("#contact-description").textContent=s.contactDescription;
@@ -345,7 +378,17 @@
       return DEFAULTS.settings.spotifyUrl;
     }
     function renderGallery() {
-      $("#gallery-grid").innerHTML=state.gallery.map((item,index)=>`<button class="gallery-card reveal overflow-hidden rounded-lg bg-[#0c111a] text-left" data-photo-id="${esc(item.id)}" aria-label="Perbesar foto ${esc(item.title)}" style="transition-delay:${(index%3)*60}ms"><div class="aspect-[1.08/1] overflow-hidden bg-gray-800"><img src="${esc(validUrl(item.image))}" alt="${esc(item.title)}" class="h-full w-full object-cover" loading="lazy"></div><div class="px-4 py-3"><h3 class="text-xs font-bold tracking-wide text-yellow-400">${esc(item.title)}</h3><p class="mt-1 text-xs text-gray-400">${esc(item.description)}</p></div></button>`).join("");
+      $("#gallery-grid").innerHTML=galleryCards(state.gallery.slice(0,6))||'<p class="reveal col-span-full rounded-xl border border-dashed border-white/15 px-5 py-10 text-center text-sm text-gray-400">Belum ada foto di galeri.</p>';
+      if(location.hash==="#gallery-all")renderFullGallery();
+      observeReveals();
+    }
+    function galleryCards(items) {
+      return items.map((item,index)=>`<button class="gallery-card reveal overflow-hidden rounded-lg bg-[#0c111a] text-left" data-photo-id="${esc(item.id)}" aria-label="Perbesar foto ${esc(item.title)}" style="transition-delay:${(index%4)*50}ms"><div class="aspect-[1.08/1] overflow-hidden bg-gray-800"><img src="${esc(validUrl(item.image))}" alt="${esc(item.title)}" class="h-full w-full object-cover" loading="lazy"></div><div class="px-4 py-3"><h3 class="text-xs font-bold tracking-wide text-yellow-400">${esc(item.title)}</h3><p class="mt-1 text-xs text-gray-400">${esc(item.description)}</p></div></button>`).join("");
+    }
+    function renderFullGallery() {
+      $("#gallery-page-heading").textContent=state.settings.galleryHeading||"Galeri Foto";
+      $("#gallery-page-count").textContent=state.gallery.length+" foto";
+      $("#gallery-all-grid").innerHTML=galleryCards(state.gallery)||'<p class="reveal col-span-full rounded-xl border border-dashed border-white/15 px-5 py-12 text-center text-sm text-gray-400">Belum ada foto di galeri.</p>';
       observeReveals();
     }
     function renderProjects() {
@@ -418,9 +461,15 @@
     }
     async function route() {
       const admin=location.hash==="#admin"||location.hash.startsWith("#admin/");
+      const fullGallery=location.hash==="#gallery-all";
       $("#public-view").classList.toggle("hidden-view",admin);$("#admin-view").classList.toggle("hidden-view",!admin);
       if(admin){$("#login-view").classList.toggle("hidden-view",!!state.token);$("#dashboard-view").classList.toggle("hidden-view",!state.token);if(state.token){$("#admin-user-label").textContent=state.username||"Administrator";return await loadAdminData();}}
-      else if(location.hash===""||location.hash==="#")window.scrollTo(0,0);
+      else {
+        $("#home-page-content").classList.toggle("hidden-view",fullGallery);
+        $("#gallery-page").classList.toggle("hidden-view",!fullGallery);
+        if(fullGallery){renderFullGallery();window.scrollTo(0,0);}
+        else if(location.hash===""||location.hash==="#"||location.hash==="#home")window.scrollTo(0,0);
+      }
       return true;
     }
     function setPanel(panel) {
@@ -446,10 +495,21 @@
         ? [["title","Nama proyek","text",true],["category","Peran / kategori","text",false],["year","Tahun","text",false],["description","Deskripsi","textarea",true],["image","URL gambar (opsional)","url",false],["url","URL proyek (opsional)","url",false]]
         : isGallery?[["title","Judul","text",true],["description","Deskripsi","text",true],["image","URL gambar","url",true]]:[["title","Nama tautan","text",true],["url","Alamat tautan","url",true]];
       const form=$("#item-form");
-      form.innerHTML=fields.map(([name,fieldLabel,inputType,required])=>`<label class="block text-xs text-gray-300">${fieldLabel}${inputType==="textarea"?`<textarea class="admin-input mt-2 min-h-24" name="${name}" ${required?"required":""} maxlength="1000">${esc(item?.[name]||"")}</textarea>`:`<input class="admin-input mt-2" name="${name}" type="${inputType}" value="${esc(item?.[name]||"")}" ${required?"required":""} maxlength="500">`}</label>`).join("")+`<div class="flex gap-3 pt-2"><button id="cancel-editor" type="button" class="flex-1 rounded-lg border border-white/10 py-3 text-sm text-gray-300">Batal</button><button type="submit" class="gold-button flex-1 rounded-lg py-3 text-sm font-bold">Simpan</button></div>`;
+      form.innerHTML=fields.map(([name,fieldLabel,inputType,required])=>`<label class="block text-xs text-gray-300">${fieldLabel}${inputType==="textarea"?`<textarea class="admin-input mt-2 min-h-24" name="${name}" ${required?"required":""} maxlength="1000">${esc(item?.[name]||"")}</textarea>`:`<input class="admin-input mt-2" name="${name}" type="${inputType}" value="${esc(item?.[name]||"")}" ${required?"required":""} maxlength="500">${name==="image"?`<span class="mt-2 flex flex-wrap items-center gap-3"><button class="upload-item-image rounded-lg border border-white/10 px-3 py-2 text-xs text-gray-300 transition hover:border-yellow-400/50" type="button">Pilih gambar dari perangkat</button><input class="item-image-file hidden" type="file" accept="image/*"><span class="item-upload-status text-[11px] text-gray-500">Maksimal 10 MB</span></span>`:""}`}</label>`).join("")+`<div class="flex gap-3 pt-2"><button id="cancel-editor" type="button" class="flex-1 rounded-lg border border-white/10 py-3 text-sm text-gray-300">Batal</button><button type="submit" class="gold-button flex-1 rounded-lg py-3 text-sm font-bold">Simpan</button></div>`;
       form.dataset.type=type;form.dataset.id=item?.id||"";
       const modal=$("#item-editor");modal.classList.remove("hidden");modal.classList.add("flex");
       $("#cancel-editor").addEventListener("click",closeEditor);
+      const uploadButton=form.querySelector(".upload-item-image"),fileInput=form.querySelector(".item-image-file");
+      if(uploadButton&&fileInput){
+        uploadButton.addEventListener("click",()=>fileInput.click());
+        fileInput.addEventListener("change",async()=>{
+          const file=fileInput.files[0];if(!file)return;
+          uploadButton.disabled=true;form.querySelector(".item-upload-status").textContent="Mengunggah...";
+          try{form.elements.namedItem("image").value=await uploadImage(file,type==="projects"?"projects":"gallery");form.querySelector(".item-upload-status").textContent="Gambar siap disimpan.";toast("Gambar berhasil diunggah. Simpan formulir untuk menampilkan perubahan.");}
+          catch(error){form.querySelector(".item-upload-status").textContent="Upload gagal.";toast(error.message,true);}
+          finally{uploadButton.disabled=false;fileInput.value="";}
+        });
+      }
       form.onsubmit=async event=>{
         event.preventDefault();const values=Object.fromEntries(new FormData(form).entries());
         const urls=isProject?["image","url"]:isGallery?["image"]:["url"];
@@ -494,12 +554,52 @@
       event.preventDefault();const form=event.currentTarget,settings={};
       for(const [key,value] of new FormData(form).entries())settings[key]=value;
       for(const input of form.querySelectorAll('input[type="checkbox"]'))settings[input.name]=input.checked;
-      for(const key of ["profileImage","galleryMore","spotifyUrl"])if(settings[key]&&!validUrl(settings[key])){toast("Periksa URL pada pengaturan "+key+".",true);return;}
+      for(const key of ["profileImage","spotifyUrl"])if(settings[key]&&!validUrl(settings[key])){toast("Periksa URL pada pengaturan "+key+".",true);return;}
       settings.accentColor=settings.accentColor||DEFAULTS.settings.accentColor;settings.backgroundColor=settings.backgroundColor||DEFAULTS.settings.backgroundColor;
       try{await api("saveSettings",{settings});state.settings={...state.settings,...settings};applySettings();fillSettingsForm();toast("Tampilan website berhasil diperbarui.");}
       catch(error){toast(error.message,true);}
     });
+    $("#upload-profile-image").addEventListener("click",()=>$("#profile-image-file").click());
+    $("#profile-image-file").addEventListener("change",async event=>{
+      const file=event.currentTarget.files[0];if(!file)return;
+      const button=$("#upload-profile-image");button.disabled=true;button.textContent="Mengunggah...";
+      try{$("#settings-form").elements.namedItem("profileImage").value=await uploadImage(file,"profile");toast("Foto profil berhasil diunggah. Tekan Simpan tampilan untuk menerapkannya.");}
+      catch(error){toast(error.message,true);}
+      finally{button.disabled=false;button.textContent="Pilih gambar dari perangkat";event.currentTarget.value="";}
+    });
     $("#add-gallery-item").addEventListener("click",()=>openItemEditor("gallery"));
+    $("#upload-gallery-folder").addEventListener("click",()=>$("#gallery-folder-files").click());
+    $("#gallery-folder-files").addEventListener("change",async event=>{
+      const files=Array.from(event.currentTarget.files),status=$("#gallery-upload-status");
+      event.currentTarget.value="";
+      if(!files.length)return;
+      const images=files.filter(file=>file.type.startsWith("image/")||/\.(png|jpe?g|gif|webp|avif|svg)$/i.test(file.name));
+      if(!images.length){toast("Folder yang dipilih tidak berisi file gambar.",true);return;}
+      if(images.length>50){toast("Pilih maksimal 50 gambar sekaligus.",true);return;}
+      let saved=0;const failures=[];
+      $("#upload-gallery-folder").disabled=true;
+      try {
+        for(let index=0;index<images.length;index++){
+          const file=images[index];
+          status.textContent=`Mengunggah ${index+1} dari ${images.length}: ${file.name}`;
+          try{
+            const image=await uploadImage(file,"gallery");
+            const title=(file.webkitRelativePath||file.name).split("/").pop().replace(/\.[^.]+$/,"").replace(/[_-]+/g," ").trim()||"Foto baru";
+            const result=await api("saveItem",{type:"gallery",item:{title,description:"",image}});
+            state.gallery.unshift(result.item);
+            saved++;
+          }catch(error){failures.push(file.name+": "+error.message);}
+        }
+      } finally {
+        $("#upload-gallery-folder").disabled=false;
+        status.textContent=`Selesai: ${saved} dari ${images.length} gambar tersimpan di galeri.`+(failures.length?` ${failures.length} gagal.`:"");
+        if(saved){renderAdminTables();applySettings();}
+      }
+      if(failures.length){
+        const detail=failures.slice(0,3).join(" | ")+(failures.length>3?" | dan "+(failures.length-3)+" lainnya":"");
+        toast(`${saved} gambar tersimpan; ${failures.length} gagal. ${detail}`,true);
+      }else toast(`${saved} gambar berhasil diunggah dan ditambahkan ke galeri.`);
+    });
     $("#add-project-item").addEventListener("click",()=>openItemEditor("projects"));
     $("#add-link-item").addEventListener("click",()=>openItemEditor("links"));
     $("#refresh-messages").addEventListener("click",()=>loadAdminData());
@@ -522,7 +622,7 @@
         catch(error){toast(error.message,true);}
       }
     });
-    $("#gallery-grid").addEventListener("click",event=>{
+    $("#public-view").addEventListener("click",event=>{
       const card=event.target.closest("[data-photo-id]");if(!card)return;
       const item=state.gallery.find(row=>String(row.id)===card.dataset.photoId);if(!item)return;
       $("#lightbox-image").src=validUrl(item.image);$("#lightbox-image").alt=item.title;$("#lightbox-caption").textContent=item.title;
