@@ -24,6 +24,7 @@ function handle_(input) {
   if (action === "publicData") return readData_();
   if (action === "contact") return addMessage_(input.message);
   requireLogin_(input.token);
+  if (action === "verifySession") return { authorized: true };
   if (action === "adminData") return readAdminData_();
   if (action === "saveSettings") return saveSettings_(input.settings);
   if (action === "saveItem") return saveItem_(input.type, input.item);
@@ -143,7 +144,7 @@ function saveItem_(type, item) {
   const sheet = sheet_(name);
   const headers = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getDisplayValues()[0].map(String);
   const required = type === "projects" ? ["title", "description"]
-    : type === "gallery" ? ["title", "description", "image"] : ["title", "url"];
+    : type === "gallery" ? ["title", "image"] : ["title", "url"];
   required.forEach(function (field) {
     if (!String(item[field] || "").trim()) throw new Error("Kolom " + field + " wajib diisi.");
     if (headers.indexOf(field) === -1) throw new Error("Header " + field + " tidak ditemukan di sheet " + name + ".");
