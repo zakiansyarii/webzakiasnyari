@@ -1,0 +1,473 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#111827">
+  <meta name="description" content="Portofolio pribadi Zaki Ansyari.">
+  <title>ZAKI ANSYARI</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root { --ink:#111827; --gold:#eab308; --gold-deep:#dda90e; --body:#d1d5db; --panel:#10141e; }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; scroll-padding-top:72px; }
+    body { margin:0; color:#f8fafc; background:#10141e; font-family:"DM Sans",sans-serif; }
+    button,input,textarea,select { font:inherit; }
+    .serif { font-family:"Playfair Display",Georgia,serif; }
+    .site-nav { background:rgba(3,5,9,.94); backdrop-filter:blur(14px); }
+    .nav-link { transition:color .2s ease; }
+    .nav-link:hover,.nav-link.active { color:var(--gold); }
+    .text-yellow-400 { color:var(--gold)!important; }
+    .bg-yellow-400 { background-color:var(--gold)!important; }
+    .hero-section { background:linear-gradient(112deg,#080b11 0%,#111827 56%,#192234 100%); }
+    .hero-image { border:4px solid var(--gold); box-shadow:0 12px 50px #0005; }
+    .gold-button { background:var(--gold); color:#111; transition:transform .2s ease,filter .2s ease; }
+    .gold-button:hover { transform:translateY(-2px); filter:brightness(1.07); }
+    .outline-button { color:var(--gold); border:1px solid var(--gold); transition:background .2s ease,color .2s ease; }
+    .outline-button:hover { color:#111; background:var(--gold); }
+    .gallery-card { transition:transform .3s ease,box-shadow .3s ease; }
+    .gallery-card:hover { transform:translateY(-5px); box-shadow:0 18px 35px #0005; }
+    .gallery-card img { transition:transform .45s ease; }
+    .gallery-card:hover img { transform:scale(1.045); }
+    .page-section { background:linear-gradient(130deg,#121823,#172131); }
+    .tool-card { background:#151b27; border:1px solid #ffffff12; transition:transform .2s ease,border-color .2s ease; }
+    .tool-card:hover { transform:translateY(-3px); border-color:#eab30880; }
+    .reveal { opacity:0; transform:translateY(18px); transition:opacity .65s ease,transform .65s ease; }
+    .reveal.visible { opacity:1; transform:translateY(0); }
+    .admin-backdrop { background:#0b0e15; }
+    .admin-sidebar { background:#11151f; border-right:1px solid #ffffff12; }
+    .admin-link.active { color:#facc15; background:#eab30818; }
+    .admin-input { width:100%; border:1px solid #ffffff1a; border-radius:.6rem; background:#0d1119; padding:.7rem .8rem; color:#f8fafc; outline:none; }
+    .admin-input:focus { border-color:#eab308a0; box-shadow:0 0 0 3px #eab30820; }
+    .admin-input::placeholder { color:#6b7280; }
+    .admin-table th,.admin-table td { border-bottom:1px solid #ffffff10; padding:.85rem 1rem; text-align:left; }
+    .admin-table th { color:#9ca3af; font-size:.68rem; font-weight:600; letter-spacing:.12em; text-transform:uppercase; }
+    .modal-bg { background:#000c; backdrop-filter:blur(5px); }
+    .toast { animation:toast-in .2s ease-out both; }
+    @keyframes toast-in { from { opacity:0; transform:translateY(-8px); } to { opacity:1; transform:translateY(0); } }
+    .hidden-view { display:none!important; }
+    @media(max-width:767px) {
+      #admin-sidebar { position:fixed; z-index:60; inset:0 auto 0 0; width:17rem; transform:translateX(-105%); transition:transform .25s ease; }
+      #admin-sidebar.open { transform:translateX(0); }
+      #admin-shade.open { display:block; }
+    }
+    @media(prefers-reduced-motion:reduce) {
+      *,*::before,*::after { scroll-behavior:auto!important; transition-duration:.01ms!important; animation-duration:.01ms!important; animation-iteration-count:1!important; }
+    }
+  </style>
+</head>
+<body>
+  <div id="toast-root" class="fixed right-4 top-4 z-[120] flex max-w-sm flex-col gap-2" aria-live="polite"></div>
+  <main id="public-view">
+    <header class="site-nav fixed inset-x-0 top-0 z-40 h-[66px]">
+      <nav class="mx-auto flex h-full w-full max-w-[600px] items-center justify-between px-5 md:w-[75%] md:max-w-[1050px]">
+        <a id="brand" href="#home" class="font-bold tracking-wide text-yellow-400">ZAKI ANSYARI</a>
+        <div class="hidden items-center gap-7 text-sm text-gray-200 sm:flex">
+          <a id="nav-home" class="nav-link" href="#home">Home</a><a id="nav-projects" class="nav-link" href="#projects">Projects</a><a id="nav-gallery" class="nav-link" href="#gallery">Gallery</a><a id="nav-songs" class="nav-link" href="#songs">Songs</a><a id="nav-contact" class="nav-link" href="#contact">Contact</a>
+        </div>
+        <button id="mobile-nav-button" class="rounded-lg border border-white/15 px-3 py-1.5 sm:hidden" aria-label="Buka navigasi">☰</button>
+      </nav>
+      <div id="mobile-nav" class="hidden border-t border-white/10 bg-black/95 px-5 py-3 sm:hidden">
+        <div class="mx-auto flex max-w-6xl flex-col gap-3 text-sm text-gray-200"><a href="#home">Home</a><a href="#projects">Projects</a><a href="#gallery">Gallery</a><a href="#songs">Songs</a><a href="#contact">Contact</a></div>
+      </div>
+    </header>
+
+    <section id="home" class="hero-section flex min-h-[620px] items-center px-5 pb-10 pt-24 sm:min-h-[690px]">
+      <div class="mx-auto grid w-full max-w-[600px] items-center gap-10 md:w-[75%] md:max-w-[1050px] md:grid-cols-2 md:gap-16">
+        <div class="reveal order-2 md:order-1">
+          <h1 class="serif text-5xl font-bold leading-[1.06] sm:text-6xl"><span id="hero-heading">Hi, I'm</span><br><span id="hero-name" class="text-yellow-400">ZAKI</span></h1>
+          <p id="hero-quote" class="mt-4 max-w-[270px] text-base leading-[1.45] text-gray-300 sm:text-lg">Hari terbesar dalam hidup Anda dan saya adalah ketika kita bertanggung jawab penuh atas sikap kita.</p>
+          <div class="mt-7 flex flex-wrap gap-3">
+            <a id="hero-primary" class="gold-button rounded-full px-7 py-3 text-xs font-bold tracking-widest" href="#contact">HIRE ME</a>
+            <a id="hero-secondary" class="outline-button rounded-full px-5 py-3 text-xs font-medium" href="#gallery">GALERY</a>
+          </div>
+        </div>
+        <div class="reveal order-1 flex justify-center md:order-2" style="transition-delay:120ms">
+          <img id="profile-image" class="hero-image h-56 w-56 rounded-full bg-gray-200 object-cover sm:h-64 sm:w-64" src="assets/profile.jpeg" alt="Foto profil Zaki Ansyari">
+        </div>
+      </div>
+    </section>
+
+    <section id="projects" class="px-5 py-16 sm:py-20">
+      <div class="mx-auto max-w-6xl">
+        <div class="reveal mb-9"><p class="text-xs font-semibold uppercase tracking-[.2em] text-yellow-400">Karya pilihan</p><h2 id="projects-heading" class="serif mt-2 text-3xl font-bold sm:text-4xl">Proyek yang Pernah Saya Kerjakan</h2><p id="projects-description" class="mt-3 max-w-2xl text-sm leading-6 text-gray-400">Beberapa proyek dan pengalaman yang pernah saya kerjakan.</p></div>
+        <div id="projects-grid" class="grid gap-5 md:grid-cols-2 lg:grid-cols-3"></div>
+      </div>
+    </section>
+
+    <section id="gallery" class="page-section px-5 py-16 sm:py-20">
+      <div class="mx-auto max-w-6xl">
+        <div class="reveal mb-9 flex items-end justify-between gap-4"><div><p class="text-xs font-semibold uppercase tracking-[.2em] text-yellow-400">Pilihan foto</p><h2 id="gallery-heading" class="serif mt-2 text-3xl font-bold sm:text-4xl">My Gallery</h2></div><span class="hidden text-sm text-gray-400 sm:block">Kenangan dan karya saya</span></div>
+        <div id="gallery-grid" class="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-3"></div>
+        <a id="gallery-more" href="https://websitezakiansyari.vercel.app/galery-foto-zaki.html" target="_blank" rel="noreferrer" class="mx-auto mt-8 block w-fit rounded-full border border-yellow-500/60 px-5 py-2.5 text-xs text-yellow-400 transition hover:bg-yellow-400 hover:text-gray-950">Lihat foto lainnya ↗</a>
+      </div>
+    </section>
+
+    <section id="songs" class="px-5 py-16 sm:py-20">
+      <div class="mx-auto grid max-w-6xl items-center gap-8 md:grid-cols-[.8fr_1.2fr]">
+        <div class="reveal"><p class="text-xs font-semibold uppercase tracking-[.2em] text-yellow-400">Yang sedang didengar</p><h2 id="songs-heading" class="serif mt-2 text-3xl font-bold sm:text-4xl">SONGS ♫</h2><p id="songs-quote" class="mt-4 max-w-lg text-sm leading-7 text-gray-300">Tidak perlu memiliki kemampuan atau kekuatan super untuk merasakan cinta. Yang dibutuhkan hanyalah menjadi diri sendiri.</p><p id="songs-caption" class="mt-3 text-xs text-gray-500">The Chainsmokers &amp; Coldplay - Something Just Like This</p></div>
+        <div class="reveal overflow-hidden rounded-xl border border-white/10 bg-black/20" style="transition-delay:120ms"><iframe id="spotify-frame" title="Pemutar Spotify" src="https://open.spotify.com/embed/track/6RUKPb4LETWmmr3iAEQktW?utm_source=generator" width="100%" height="152" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe></div>
+      </div>
+    </section>
+
+    <section id="links" class="page-section px-5 py-14">
+      <div class="mx-auto max-w-6xl"><div class="reveal mb-6"><p class="text-xs font-semibold uppercase tracking-[.2em] text-yellow-400">Jelajahi juga</p><h2 id="links-heading" class="serif mt-2 text-2xl font-bold">Ruang lainnya</h2></div><div id="links-grid" class="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5"></div></div>
+    </section>
+
+    <section id="contact" class="px-5 py-16 sm:py-20">
+      <div class="mx-auto grid max-w-6xl gap-10 md:grid-cols-2">
+        <div class="reveal"><p class="text-xs font-semibold uppercase tracking-[.2em] text-yellow-400">Mari terhubung</p><h2 id="contact-heading" class="serif mt-2 text-3xl font-bold sm:text-4xl">Hubungi Saya</h2><p id="contact-description" class="mt-4 max-w-md text-sm leading-7 text-gray-400">Punya pertanyaan atau ingin menyampaikan sesuatu? Kirimkan pesan kepada saya.</p><a id="contact-email" class="mt-5 inline-block text-sm text-yellow-400 hover:text-yellow-300" href="mailto:zakiansyari@gmail.com">zakiansyari@gmail.com ↗</a></div>
+        <form id="contact-form" class="reveal space-y-3" style="transition-delay:120ms"><label class="block text-xs text-gray-400">Nama<input class="admin-input mt-2" name="name" placeholder="Nama" maxlength="100" required></label><label class="block text-xs text-gray-400">Email<input class="admin-input mt-2" name="email" type="email" placeholder="Email" maxlength="200" required></label><label class="block text-xs text-gray-400">Pesan<textarea class="admin-input mt-2 min-h-28 resize-y" name="message" placeholder="Pesan" maxlength="3000" required></textarea></label><button id="contact-submit" class="gold-button rounded-full px-7 py-3 text-xs font-bold tracking-widest" type="submit">SEND</button></form>
+      </div>
+    </section>
+    <footer class="border-t border-white/10 bg-black/30 px-5 py-5"><div class="mx-auto flex max-w-6xl items-center justify-between gap-4 text-xs text-gray-500"><span>© <span id="copyright-year"></span> <span id="footer-name">ZAKI ANSYARI</span></span><a href="#admin" class="transition hover:text-yellow-400">Admin ↗</a></div></footer>
+  </main>
+
+  <main id="admin-view" class="admin-backdrop hidden-view min-h-screen">
+    <section id="login-view" class="flex min-h-screen items-center justify-center px-5 py-10">
+      <div class="w-full max-w-md rounded-2xl border border-white/10 bg-[#151a24] p-7 shadow-2xl sm:p-9">
+        <a href="#" class="font-bold tracking-wide text-yellow-400">ZAKI ANSYARI <span class="ml-1 text-[10px] text-gray-500">ADMIN</span></a>
+        <p class="mt-8 text-xs font-semibold uppercase tracking-[.2em] text-yellow-400">Area admin</p><h1 class="serif mt-2 text-3xl font-bold">Selamat datang.</h1><p class="mt-2 text-sm text-gray-400">Masuk untuk mengatur tampilan dan konten website.</p>
+        <form id="login-form" class="mt-7 space-y-4"><label class="block text-xs text-gray-300">Username<input class="admin-input mt-2" name="username" autocomplete="username" required></label><label class="block text-xs text-gray-300">Password<input class="admin-input mt-2" name="password" type="password" autocomplete="current-password" required></label><button class="gold-button w-full rounded-lg py-3 text-sm font-bold" type="submit">Masuk ke dashboard →</button></form>
+        <p class="mt-4 text-center text-xs leading-5 text-gray-500">Akun admin diatur melalui Google Apps Script. Kredensial tidak disimpan di halaman ini.</p><a href="#" class="mt-5 block text-center text-xs text-gray-400 hover:text-yellow-400">← Kembali ke website</a>
+      </div>
+    </section>
+    <section id="dashboard-view" class="hidden-view min-h-screen">
+      <div class="min-h-screen md:flex">
+        <div id="admin-shade" class="fixed inset-0 z-50 hidden bg-black/60 md:hidden"></div>
+        <aside id="admin-sidebar" class="admin-sidebar flex w-64 shrink-0 flex-col px-4 py-5">
+          <div class="flex items-center justify-between px-3"><a href="#" class="font-bold tracking-wide text-yellow-400">ZAKI ANSYARI</a><button id="close-admin-menu" class="text-gray-400 md:hidden" aria-label="Tutup menu">✕</button></div>
+          <p class="px-3 pb-2 pt-10 text-[10px] font-semibold uppercase tracking-[.18em] text-gray-600">Kelola website</p>
+          <nav class="space-y-1">
+            <button class="admin-link active w-full rounded-lg px-3 py-3 text-left text-sm text-gray-400" data-panel="overview">◫ <span class="ml-2">Ringkasan</span></button>
+            <button class="admin-link w-full rounded-lg px-3 py-3 text-left text-sm text-gray-400" data-panel="settings">⚙ <span class="ml-2">Tampilan website</span></button>
+            <button class="admin-link w-full rounded-lg px-3 py-3 text-left text-sm text-gray-400" data-panel="projects">◇ <span class="ml-2">Proyek</span></button>
+            <button class="admin-link w-full rounded-lg px-3 py-3 text-left text-sm text-gray-400" data-panel="gallery">▧ <span class="ml-2">Galeri foto</span></button>
+            <button class="admin-link w-full rounded-lg px-3 py-3 text-left text-sm text-gray-400" data-panel="links">↗ <span class="ml-2">Tautan</span></button>
+            <button class="admin-link w-full rounded-lg px-3 py-3 text-left text-sm text-gray-400" data-panel="messages">✉ <span class="ml-2">Pesan masuk</span><span id="message-count" class="float-right rounded-full bg-yellow-400 px-2 py-0.5 text-[10px] font-bold text-gray-950">0</span></button>
+          </nav>
+          <div class="mt-auto border-t border-white/10 pt-4"><p id="admin-user-label" class="truncate px-3 text-xs text-gray-400">Administrator</p><button id="logout-button" class="mt-3 w-full rounded-lg border border-white/10 py-2.5 text-xs text-gray-400 hover:border-red-300/30 hover:text-red-200">Keluar dari admin</button></div>
+        </aside>
+        <div class="min-w-0 flex-1">
+          <header class="flex items-center justify-between border-b border-white/10 px-5 py-4 sm:px-8"><div class="flex items-center gap-3"><button id="open-admin-menu" class="text-lg text-gray-400 md:hidden" aria-label="Buka menu">☰</button><div><p class="text-[10px] uppercase tracking-[.16em] text-gray-500">Dashboard / <span id="admin-breadcrumb">Ringkasan</span></p><h1 id="admin-page-title" class="mt-1 text-lg font-semibold">Ringkasan</h1></div></div><a href="#" class="rounded-lg border border-white/10 px-3 py-2 text-xs text-gray-300 hover:border-yellow-400/50">Lihat website ↗</a></header>
+          <div class="mx-auto max-w-7xl p-5 sm:p-8">
+            <section id="panel-overview" class="admin-panel">
+              <p class="mb-5 text-sm text-gray-400">Atur informasi dan konten yang tampil di halaman publik.</p>
+              <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4"><div class="rounded-xl border border-white/10 bg-[#151a24] p-5"><p class="text-xs text-gray-500">Proyek</p><p id="stat-projects" class="serif mt-2 text-3xl font-bold">—</p></div><div class="rounded-xl border border-white/10 bg-[#151a24] p-5"><p class="text-xs text-gray-500">Foto galeri</p><p id="stat-gallery" class="serif mt-2 text-3xl font-bold">—</p></div><div class="rounded-xl border border-white/10 bg-[#151a24] p-5"><p class="text-xs text-gray-500">Tautan tambahan</p><p id="stat-links" class="serif mt-2 text-3xl font-bold">—</p></div><div class="rounded-xl border border-white/10 bg-[#151a24] p-5"><p class="text-xs text-gray-500">Penyimpanan</p><p id="connection-status" class="mt-3 text-lg font-semibold text-emerald-300">Google Sheets</p></div></div>
+              <div class="mt-6 rounded-xl border border-white/10 bg-[#151a24] p-5 sm:p-6"><div class="flex flex-wrap items-center justify-between gap-3"><div><h2 class="font-semibold">Pengaturan cepat</h2><p class="mt-1 text-xs text-gray-500">Ubah profil atau kelola konten halaman.</p></div><button class="go-panel rounded-lg border border-white/10 px-3 py-2 text-xs text-gray-300 hover:border-yellow-400/50" data-target="settings">Atur tampilan →</button></div><div class="mt-5 flex flex-wrap gap-2"><button class="go-panel rounded-lg bg-yellow-400 px-4 py-2 text-xs font-semibold text-gray-950" data-target="projects">Kelola proyek</button><button class="go-panel rounded-lg border border-white/10 px-4 py-2 text-xs text-gray-300" data-target="gallery">Kelola foto</button><button class="go-panel rounded-lg border border-white/10 px-4 py-2 text-xs text-gray-300" data-target="links">Kelola tautan</button></div></div>
+            </section>
+            <section id="panel-settings" class="admin-panel hidden-view">
+              <div class="mb-5"><h2 class="font-semibold">Tampilan website</h2><p class="mt-1 text-xs text-gray-500">Semua perubahan akan terlihat di halaman utama setelah disimpan.</p></div>
+              <form id="settings-form" class="space-y-5">
+                <div class="rounded-xl border border-white/10 bg-[#151a24] p-5"><h3 class="mb-4 text-sm font-semibold text-yellow-400">Identitas & hero</h3><div class="grid gap-4 sm:grid-cols-2">
+                  <label class="text-xs text-gray-400">Nama/logo<input class="admin-input mt-2" name="siteName" maxlength="60" required></label><label class="text-xs text-gray-400">Sapaan<input class="admin-input mt-2" name="heroHeading" maxlength="80" required></label>
+                  <label class="text-xs text-gray-400">Nama di judul hero<input class="admin-input mt-2" name="heroName" maxlength="60" required></label><label class="text-xs text-gray-400">Alamat email<input class="admin-input mt-2" name="email" type="email" maxlength="200"></label>
+                  <label class="text-xs text-gray-400">Menu Home<input class="admin-input mt-2" name="navHome" maxlength="30"></label><label class="text-xs text-gray-400">Menu Gallery<input class="admin-input mt-2" name="navGallery" maxlength="30"></label>
+                  <label class="text-xs text-gray-400">Menu Projects<input class="admin-input mt-2" name="navProjects" maxlength="30"></label>
+                  <label class="text-xs text-gray-400">Menu Songs<input class="admin-input mt-2" name="navSongs" maxlength="30"></label><label class="text-xs text-gray-400">Menu Contact<input class="admin-input mt-2" name="navContact" maxlength="30"></label>
+                  <label class="text-xs text-gray-400 sm:col-span-2">Kutipan / deskripsi hero<textarea class="admin-input mt-2 min-h-20" name="heroQuote" maxlength="400"></textarea></label>
+                  <label class="text-xs text-gray-400 sm:col-span-2">URL foto profil<input class="admin-input mt-2" name="profileImage" type="url" required></label>
+                  <label class="text-xs text-gray-400">Teks tombol utama<input class="admin-input mt-2" name="primaryButton" maxlength="30"></label><label class="text-xs text-gray-400">Teks tombol galeri<input class="admin-input mt-2" name="secondaryButton" maxlength="30"></label>
+                </div></div>
+                <div class="rounded-xl border border-white/10 bg-[#151a24] p-5"><h3 class="mb-4 text-sm font-semibold text-yellow-400">Galeri, lagu & kontak</h3><div class="grid gap-4 sm:grid-cols-2">
+                  <label class="text-xs text-gray-400">Judul proyek<input class="admin-input mt-2" name="projectsHeading" maxlength="100"></label><label class="text-xs text-gray-400">Deskripsi bagian proyek<input class="admin-input mt-2" name="projectsDescription" maxlength="250"></label>
+                  <label class="text-xs text-gray-400">Judul galeri<input class="admin-input mt-2" name="galleryHeading" maxlength="80"></label><label class="text-xs text-gray-400">Tautan galeri lengkap<input class="admin-input mt-2" name="galleryMore" type="url"></label>
+                  <label class="text-xs text-gray-400">Judul bagian lagu<input class="admin-input mt-2" name="songsHeading" maxlength="80"></label><label class="text-xs text-gray-400">Keterangan lagu<input class="admin-input mt-2" name="songsCaption" maxlength="160"></label>
+                  <label class="text-xs text-gray-400 sm:col-span-2">Kutipan lagu<textarea class="admin-input mt-2 min-h-20" name="songsQuote" maxlength="400"></textarea></label>
+                  <label class="text-xs text-gray-400 sm:col-span-2">URL lagu Spotify (track atau embed)<input class="admin-input mt-2" name="spotifyUrl" type="url"></label>
+                  <label class="text-xs text-gray-400">Judul bagian tautan<input class="admin-input mt-2" name="linksHeading" maxlength="80"></label><label class="text-xs text-gray-400">Judul kontak<input class="admin-input mt-2" name="contactHeading" maxlength="80"></label>
+                  <label class="text-xs text-gray-400 sm:col-span-2">Deskripsi kontak<textarea class="admin-input mt-2 min-h-20" name="contactDescription" maxlength="400"></textarea></label>
+                </div></div>
+                <div class="rounded-xl border border-white/10 bg-[#151a24] p-5"><h3 class="mb-4 text-sm font-semibold text-yellow-400">Warna situs</h3><div class="grid gap-4 sm:grid-cols-2"><label class="text-xs text-gray-400">Warna aksen<input class="admin-input mt-2 h-12 p-1" name="accentColor" type="color"></label><label class="text-xs text-gray-400">Warna latar utama<input class="admin-input mt-2 h-12 p-1" name="backgroundColor" type="color"></label></div></div>
+                <div class="rounded-xl border border-white/10 bg-[#151a24] p-5"><h3 class="mb-4 text-sm font-semibold text-yellow-400">Bagian yang ditampilkan</h3><div class="grid gap-3 sm:grid-cols-2"><label class="flex items-center gap-3 text-sm text-gray-300"><input class="accent-yellow-400" name="showProjects" type="checkbox">Proyek</label><label class="flex items-center gap-3 text-sm text-gray-300"><input class="accent-yellow-400" name="showGallery" type="checkbox">Galeri foto</label><label class="flex items-center gap-3 text-sm text-gray-300"><input class="accent-yellow-400" name="showSongs" type="checkbox">Bagian lagu</label><label class="flex items-center gap-3 text-sm text-gray-300"><input class="accent-yellow-400" name="showLinks" type="checkbox">Tautan tambahan</label><label class="flex items-center gap-3 text-sm text-gray-300"><input class="accent-yellow-400" name="showContact" type="checkbox">Bagian kontak</label></div></div>
+                <div class="flex justify-end"><button class="gold-button rounded-lg px-6 py-3 text-sm font-bold" type="submit">Simpan tampilan</button></div>
+              </form>
+            </section>
+            <section id="panel-projects" class="admin-panel hidden-view"><div class="mb-5 flex flex-wrap items-center justify-between gap-3"><div><h2 class="font-semibold">Proyek</h2><p class="mt-1 text-xs text-gray-500">Tambahkan karya yang pernah dikerjakan untuk ditampilkan di atas galeri.</p></div><button id="add-project-item" class="gold-button rounded-lg px-4 py-2.5 text-xs font-bold">＋ Tambah proyek</button></div><div class="overflow-hidden rounded-xl border border-white/10 bg-[#151a24]"><div class="overflow-x-auto"><table class="admin-table w-full min-w-[720px] text-sm"><thead><tr><th>Proyek</th><th>Peran / kategori</th><th>Tahun</th><th>Aksi</th></tr></thead><tbody id="admin-projects-table"></tbody></table></div></div></section>
+            <section id="panel-gallery" class="admin-panel hidden-view"><div class="mb-5 flex flex-wrap items-center justify-between gap-3"><div><h2 class="font-semibold">Galeri foto</h2><p class="mt-1 text-xs text-gray-500">Kelola foto dan teks yang muncul di halaman publik.</p></div><button id="add-gallery-item" class="gold-button rounded-lg px-4 py-2.5 text-xs font-bold">＋ Tambah foto</button></div><div class="overflow-hidden rounded-xl border border-white/10 bg-[#151a24]"><div class="overflow-x-auto"><table class="admin-table w-full min-w-[620px] text-sm"><thead><tr><th>Foto</th><th>Judul</th><th>Deskripsi</th><th>Aksi</th></tr></thead><tbody id="admin-gallery-table"></tbody></table></div></div></section>
+            <section id="panel-links" class="admin-panel hidden-view"><div class="mb-5 flex flex-wrap items-center justify-between gap-3"><div><h2 class="font-semibold">Tautan tambahan</h2><p class="mt-1 text-xs text-gray-500">Kelola tombol Cloud, Game, dokumen, atau situs lain.</p></div><button id="add-link-item" class="gold-button rounded-lg px-4 py-2.5 text-xs font-bold">＋ Tambah tautan</button></div><div class="overflow-hidden rounded-xl border border-white/10 bg-[#151a24]"><div class="overflow-x-auto"><table class="admin-table w-full min-w-[560px] text-sm"><thead><tr><th>Nama</th><th>URL</th><th>Aksi</th></tr></thead><tbody id="admin-links-table"></tbody></table></div></div></section>
+            <section id="panel-messages" class="admin-panel hidden-view"><div class="mb-5 flex flex-wrap items-center justify-between gap-3"><div><h2 class="font-semibold">Pesan dari pengunjung</h2><p class="mt-1 text-xs text-gray-500">Pesan yang dikirim dari formulir Hubungi Saya.</p></div><button id="refresh-messages" class="rounded-lg border border-white/10 px-4 py-2.5 text-xs text-gray-300 transition hover:border-yellow-400/50">↻ Perbarui</button></div><div id="messages-list" class="space-y-3"></div></section>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="lightbox" class="modal-bg fixed inset-0 z-[80] hidden items-center justify-center p-5" role="dialog" aria-modal="true" aria-label="Tampilan foto"><button id="lightbox-close" class="absolute right-5 top-5 text-3xl text-white" aria-label="Tutup">×</button><img id="lightbox-image" class="max-h-[85vh] max-w-full rounded-xl object-contain" alt=""><p id="lightbox-caption" class="absolute bottom-5 text-sm text-white"></p></div>
+  <div id="item-editor" class="modal-bg fixed inset-0 z-[90] hidden items-center justify-center overflow-y-auto p-4" role="dialog" aria-modal="true"><div class="w-full max-w-lg rounded-2xl border border-white/10 bg-[#171c27] p-6"><div class="mb-5 flex items-center justify-between"><h2 id="editor-title" class="serif text-xl font-bold">Edit</h2><button id="editor-close" class="text-xl text-gray-400" aria-label="Tutup">×</button></div><form id="item-form" class="space-y-4"></form></div></div>
+
+  <script>
+    // Vercel routes this same-origin API request to Google Apps Script.
+    const API_URL = "/api/portfolio";
+    const API_ENABLED = location.protocol === "http:" || location.protocol === "https:";
+    const DEFAULTS = {
+      settings:{
+        siteName:"ZAKI ANSYARI",heroHeading:"Hi, I'm",heroName:"ZAKI",navHome:"Home",navProjects:"Projects",navGallery:"Gallery",navSongs:"Songs",navContact:"Contact",
+        heroQuote:"Hari terbesar dalam hidup Anda dan saya adalah ketika kita bertanggung jawab penuh atas sikap kita.",
+        profileImage:"assets/profile.jpeg",primaryButton:"HIRE ME",secondaryButton:"GALERY",email:"zakiansyari@gmail.com",
+        projectsHeading:"Proyek yang Pernah Saya Kerjakan",projectsDescription:"Beberapa proyek dan pengalaman yang pernah saya kerjakan.",
+        galleryHeading:"My Gallery",galleryMore:"https://websitezakiansyari.vercel.app/galery-foto-zaki.html",
+        songsHeading:"SONGS ♫",songsQuote:"Tidak perlu memiliki kemampuan atau kekuatan super untuk merasakan cinta. Yang dibutuhkan hanyalah menjadi diri sendiri.",
+        songsCaption:"The Chainsmokers & Coldplay - Something Just Like This",
+        spotifyUrl:"https://open.spotify.com/embed/track/6RUKPb4LETWmmr3iAEQktW?utm_source=generator",
+        linksHeading:"Ruang lainnya",contactHeading:"Hubungi Saya",
+        contactDescription:"Punya pertanyaan atau ingin menyampaikan sesuatu? Kirimkan pesan kepada saya.",
+        accentColor:"#eab308",backgroundColor:"#10141e",showProjects:true,showGallery:true,showSongs:true,showLinks:true,showContact:true
+      },
+      projects:[],
+      gallery:[
+        {id:"1",title:"ZAKI ANSYARI",description:"HAI NAMA SAYA ZAKI",image:"assets/1.jpeg"},
+        {id:"2",title:"ZAKI ANSYARI",description:"HAI NAMA SAYA ZAKI",image:"assets/2.jpeg"},
+        {id:"3",title:"ZAKI ANSYARI",description:"HAI NAMA SAYA ZAKI",image:"assets/3.jpeg"},
+        {id:"4",title:"ZAKI ANSYARI",description:"HAI NAMA SAYA ZAKI",image:"assets/4.jpeg"},
+        {id:"5",title:"ZAKI ANSYARI",description:"HAI NAMA SAYA ZAKI",image:"assets/5.jpeg"},
+        {id:"6",title:"ZAKI ANSYARI",description:"HAI NAMA SAYA ZAKI",image:"assets/6.jpeg"}
+      ],
+      links:[
+        {id:"cloud",title:"CLOUD",url:"https://websitezakiansyari.vercel.app/cloud.html"},
+        {id:"game",title:"GAME",url:"https://websitezakiansyari.vercel.app/game/snack.html"},
+        {id:"pdf",title:"FILE TO PDF",url:"https://websitezakiansyari.vercel.app/filetopdf.htm"},
+        {id:"schedule",title:"JADWAL KEGIATAN",url:"https://websitezakiansyari.vercel.app/jadwalkegiatan.html"},
+        {id:"finance",title:"KEUANGAN",url:"https://websitezakiansyari.vercel.app/keuangan.html"}
+      ]
+    };
+    const state={settings:{...DEFAULTS.settings},projects:[],gallery:DEFAULTS.gallery.map(item=>({...item})),links:DEFAULTS.links.map(item=>({...item})),messages:[],token:sessionStorage.getItem("zaki_admin_token")||"",username:sessionStorage.getItem("zaki_admin_user")||"",panel:"overview"};
+    const $=selector=>document.querySelector(selector);
+    const esc=value=>String(value??"").replace(/[&<>"']/g,char=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[char]));
+    function validUrl(value) {
+      if(!value) return "";
+      try { const url=new URL(value,location.href); return ["http:","https:"].includes(url.protocol)||(location.protocol==="file:"&&url.protocol==="file:")?url.href:""; } catch { return ""; }
+    }
+    function toast(message,error=false) {
+      const el=document.createElement("div");el.className="toast rounded-lg border px-4 py-3 text-sm shadow-lg "+(error?"border-red-300/20 bg-[#241417] text-red-100":"border-emerald-300/20 bg-[#111c18] text-gray-100");
+      el.textContent=message;$("#toast-root").append(el);setTimeout(()=>el.remove(),4000);
+    }
+    async function api(action,details={}) {
+      if(!API_ENABLED) throw new Error("Admin tersedia setelah website di-deploy ke Vercel dan APPS_SCRIPT_URL dikonfigurasi.");
+      let response;
+      try { response=await fetch(API_URL,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({action,token:state.token,...details})}); }
+      catch { throw new Error("Tidak dapat menghubungi Google Apps Script. Periksa URL dan deployment Web App."); }
+      let result;try{result=await response.json();}catch{throw new Error("Respons Apps Script tidak valid. Periksa URL /exec dan izin deployment.");}
+      if(!response.ok) throw new Error(result.error||"Server merespons dengan status "+response.status+".");
+      if(!result.ok) throw new Error(result.error||"Permintaan tidak berhasil.");
+      return result;
+    }
+    function applySettings() {
+      const s=state.settings,root=document.documentElement;
+      root.style.setProperty("--gold",s.accentColor||DEFAULTS.settings.accentColor);
+      root.style.setProperty("--gold-deep",s.accentColor||DEFAULTS.settings.accentColor);
+      root.style.setProperty("--ink",s.backgroundColor||DEFAULTS.settings.backgroundColor);
+      document.body.style.backgroundColor=s.backgroundColor||DEFAULTS.settings.backgroundColor;
+      const base=s.backgroundColor||DEFAULTS.settings.backgroundColor;
+      document.querySelectorAll(".hero-section").forEach(el=>el.style.background=`linear-gradient(112deg,color-mix(in srgb,${base} 42%,#080b11) 0%,color-mix(in srgb,${base} 80%,#111827) 56%,color-mix(in srgb,${base} 65%,#192234) 100%)`);
+      document.querySelectorAll(".page-section").forEach(el=>el.style.background=`linear-gradient(130deg,color-mix(in srgb,${base} 80%,#121823),color-mix(in srgb,${base} 72%,#172131))`);
+      $("#brand").textContent=s.siteName;$("#footer-name").textContent=s.siteName;document.title=s.siteName;
+      $("#nav-home").textContent=s.navHome||DEFAULTS.settings.navHome;$("#nav-projects").textContent=s.navProjects||DEFAULTS.settings.navProjects;$("#nav-gallery").textContent=s.navGallery||DEFAULTS.settings.navGallery;
+      $("#nav-songs").textContent=s.navSongs||DEFAULTS.settings.navSongs;$("#nav-contact").textContent=s.navContact||DEFAULTS.settings.navContact;
+      $("#mobile-nav").querySelectorAll("a").forEach((link,index)=>{link.textContent=[s.navHome,s.navProjects,s.navGallery,s.navSongs,s.navContact][index]||["Home","Projects","Gallery","Songs","Contact"][index];});
+      $("#hero-heading").textContent=s.heroHeading;$("#hero-name").textContent=s.heroName;$("#hero-quote").textContent=s.heroQuote;
+      $("#hero-primary").textContent=s.primaryButton;$("#hero-secondary").textContent=s.secondaryButton;
+      $("#hero-primary").href="#contact";$("#hero-secondary").href="#gallery";
+      $("#profile-image").src=validUrl(s.profileImage)||DEFAULTS.settings.profileImage;$("#profile-image").alt="Foto profil "+s.heroName;
+      $("#projects-heading").textContent=s.projectsHeading||DEFAULTS.settings.projectsHeading;$("#projects-description").textContent=s.projectsDescription||DEFAULTS.settings.projectsDescription;
+      $("#gallery-heading").textContent=s.galleryHeading;$("#gallery-more").href=validUrl(s.galleryMore)||"#gallery";
+      $("#songs-heading").textContent=s.songsHeading;$("#songs-quote").textContent=s.songsQuote;$("#songs-caption").textContent=s.songsCaption;
+      $("#spotify-frame").src=spotifyEmbed(s.spotifyUrl);
+      $("#links-heading").textContent=s.linksHeading;$("#contact-heading").textContent=s.contactHeading;$("#contact-description").textContent=s.contactDescription;
+      $("#contact-email").textContent=(s.email||"").trim()+" ↗";$("#contact-email").href="mailto:"+(s.email||"");
+      renderProjects();
+      $("#projects").classList.toggle("hidden-view",!s.showProjects);$("#nav-projects").classList.toggle("hidden-view",!s.showProjects);
+      $("#gallery").classList.toggle("hidden-view",!s.showGallery);$("#nav-gallery").classList.toggle("hidden-view",!s.showGallery);
+      $("#songs").classList.toggle("hidden-view",!s.showSongs);$("#nav-songs").classList.toggle("hidden-view",!s.showSongs);
+      $("#links").classList.toggle("hidden-view",!s.showLinks);$("#contact").classList.toggle("hidden-view",!s.showContact);$("#nav-contact").classList.toggle("hidden-view",!s.showContact);
+      renderGallery();renderLinks();
+    }
+    function spotifyEmbed(value) {
+      try {
+        const url=new URL(value);
+        if(url.hostname!=="open.spotify.com") return DEFAULTS.settings.spotifyUrl;
+        const parts=url.pathname.split("/").filter(Boolean);
+        if(parts[0]==="embed"&&parts.length>=3) return url.href;
+        if(parts.length>=2&&["track","album","playlist","episode","show"].includes(parts[0])) return "https://open.spotify.com/embed/"+parts[0]+"/"+encodeURIComponent(parts[1]);
+      } catch {}
+      return DEFAULTS.settings.spotifyUrl;
+    }
+    function renderGallery() {
+      $("#gallery-grid").innerHTML=state.gallery.map((item,index)=>`<button class="gallery-card reveal overflow-hidden rounded-lg bg-[#0c111a] text-left" data-photo-id="${esc(item.id)}" aria-label="Perbesar foto ${esc(item.title)}" style="transition-delay:${(index%3)*60}ms"><div class="aspect-[1.08/1] overflow-hidden bg-gray-800"><img src="${esc(validUrl(item.image))}" alt="${esc(item.title)}" class="h-full w-full object-cover" loading="lazy"></div><div class="px-4 py-3"><h3 class="text-xs font-bold tracking-wide text-yellow-400">${esc(item.title)}</h3><p class="mt-1 text-xs text-gray-400">${esc(item.description)}</p></div></button>`).join("");
+      observeReveals();
+    }
+    function renderProjects() {
+      $("#projects-grid").innerHTML=state.projects.map((item,index)=>{
+        const image=validUrl(item.image),projectLink=validUrl(item.url);
+        const title=esc(item.title),description=esc(item.description),category=esc(item.category);
+        const card=`<article class="gallery-card reveal overflow-hidden rounded-xl border border-white/10 bg-[#0c111a]" style="transition-delay:${(index%3)*60}ms">${image?`<div class="aspect-[16/10] overflow-hidden bg-gray-800"><img src="${esc(image)}" alt="${title}" class="h-full w-full object-cover" loading="lazy"></div>`:'<div class="flex aspect-[16/10] items-center justify-center bg-gradient-to-br from-gray-800 to-[#0c111a] text-4xl text-yellow-400/70">✦</div>'}<div class="p-5"><div class="flex items-start justify-between gap-3"><h3 class="serif text-xl font-bold">${title}</h3>${item.year?`<span class="shrink-0 text-xs text-gray-500">${esc(item.year)}</span>`:""}</div>${category?`<p class="mt-1 text-xs font-semibold uppercase tracking-wider text-yellow-400">${category}</p>`:""}<p class="mt-3 text-sm leading-6 text-gray-400">${description}</p>${projectLink?`<a href="${esc(projectLink)}" target="_blank" rel="noreferrer" class="mt-4 inline-flex text-xs font-semibold text-yellow-400 transition hover:text-yellow-300">Lihat proyek ↗</a>`:""}</div></article>`;
+        return card;
+      }).join("")||'<p class="reveal col-span-full rounded-xl border border-dashed border-white/15 px-5 py-10 text-center text-sm text-gray-400">Proyek yang pernah dikerjakan akan ditampilkan di sini.</p>';
+      observeReveals();
+    }
+    function renderLinks() {
+      $("#links-grid").innerHTML=state.links.map((item,index)=>`<a class="tool-card reveal rounded-lg px-4 py-4 text-center text-xs font-semibold tracking-wide text-yellow-400" style="transition-delay:${index*40}ms" href="${esc(validUrl(item.url)||"#")}" target="_blank" rel="noreferrer">${esc(item.title)} <span class="ml-1 text-gray-500">↗</span></a>`).join("")||'<p class="text-sm text-gray-500">Belum ada tautan tambahan.</p>';
+      observeReveals();
+    }
+    function observeReveals() {
+      const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add("visible");observer.unobserve(entry.target);}}),{threshold:.12});
+      document.querySelectorAll(".reveal:not(.visible)").forEach(el=>observer.observe(el));
+    }
+    function renderAdminTables() {
+      $("#stat-projects").textContent=state.projects.length;$("#stat-gallery").textContent=state.gallery.length;$("#stat-links").textContent=state.links.length;
+      $("#message-count").textContent=state.messages.length;
+      $("#admin-projects-table").innerHTML=state.projects.map(item=>`<tr><td class="font-medium">${esc(item.title)}</td><td class="text-gray-400">${esc(item.category||"—")}</td><td class="text-gray-400">${esc(item.year||"—")}</td><td class="whitespace-nowrap"><button class="edit-item mr-3 text-xs text-yellow-300" data-type="projects" data-id="${esc(item.id)}">Edit</button><button class="delete-item text-xs text-red-300" data-type="projects" data-id="${esc(item.id)}">Hapus</button></td></tr>`).join("")||'<tr><td colspan="4" class="text-center text-gray-500">Belum ada proyek. Tambahkan karya pertama Anda.</td></tr>';
+      $("#admin-gallery-table").innerHTML=state.gallery.map(item=>`<tr><td><img class="h-10 w-14 rounded object-cover" src="${esc(validUrl(item.image))}" alt=""></td><td class="font-medium">${esc(item.title)}</td><td class="max-w-[200px] truncate text-gray-400">${esc(item.description)}</td><td class="whitespace-nowrap"><button class="edit-item mr-3 text-xs text-yellow-300" data-type="gallery" data-id="${esc(item.id)}">Edit</button><button class="delete-item text-xs text-red-300" data-type="gallery" data-id="${esc(item.id)}">Hapus</button></td></tr>`).join("")||'<tr><td colspan="4" class="text-center text-gray-500">Belum ada foto.</td></tr>';
+      $("#admin-links-table").innerHTML=state.links.map(item=>`<tr><td class="font-medium">${esc(item.title)}</td><td class="max-w-[240px] truncate text-gray-400">${esc(item.url)}</td><td class="whitespace-nowrap"><button class="edit-item mr-3 text-xs text-yellow-300" data-type="links" data-id="${esc(item.id)}">Edit</button><button class="delete-item text-xs text-red-300" data-type="links" data-id="${esc(item.id)}">Hapus</button></td></tr>`).join("")||'<tr><td colspan="3" class="text-center text-gray-500">Belum ada tautan.</td></tr>';
+      $("#messages-list").innerHTML=state.messages.map(message=>{
+        const date=message.createdAt?new Date(message.createdAt):null;
+        const dateLabel=date&&!Number.isNaN(date.getTime())?date.toLocaleString("id-ID",{dateStyle:"medium",timeStyle:"short"}):"";
+        const email=String(message.email||"");
+        return `<article class="rounded-xl border border-white/10 bg-[#151a24] p-5"><div class="flex flex-wrap items-start justify-between gap-3"><div class="min-w-0"><h3 class="font-semibold">${esc(message.name||"Tanpa nama")}</h3><a class="mt-1 inline-block break-all text-xs text-yellow-300 hover:text-yellow-200" href="mailto:${esc(email)}">${esc(email)}</a></div><div class="flex items-center gap-3"><time class="text-[11px] text-gray-500">${esc(dateLabel)}</time><button class="delete-message rounded-md border border-white/10 px-2.5 py-1.5 text-xs text-red-300 hover:border-red-300/30" data-id="${esc(message.id)}">Hapus</button></div></div><p class="mt-4 whitespace-pre-wrap break-words text-sm leading-6 text-gray-300">${esc(message.message)}</p></article>`;
+      }).join("")||'<div class="rounded-xl border border-dashed border-white/15 px-5 py-12 text-center text-sm text-gray-400">Belum ada pesan masuk.</div>';
+    }
+    function fillSettingsForm() {
+      const form=$("#settings-form"),s=state.settings;
+      for(const [key,value] of Object.entries(s)){const input=form.elements.namedItem(key);if(!input)continue;if(input.type==="checkbox")input.checked=Boolean(value);else input.value=value??"";}
+    }
+    async function loadPublicData() {
+      if(!API_ENABLED)return;
+      try {
+        const data=await api("publicData");
+        if(data.settings&&typeof data.settings==="object")state.settings={...state.settings,...data.settings};
+        if(Array.isArray(data.projects))state.projects=data.projects;
+        if(Array.isArray(data.gallery))state.gallery=data.gallery;
+        if(Array.isArray(data.links))state.links=data.links;
+        applySettings();
+      } catch(error) { console.warn("Konten Google Sheets tidak dapat dimuat; menampilkan konten bawaan.",error.message); }
+    }
+    async function loadAdminData() {
+      try {
+        const data=await api("adminData");
+        if(data.settings&&typeof data.settings==="object")state.settings={...state.settings,...data.settings};
+        if(Array.isArray(data.projects))state.projects=data.projects;
+        if(Array.isArray(data.gallery))state.gallery=data.gallery;
+        if(Array.isArray(data.links))state.links=data.links;
+        if(Array.isArray(data.messages))state.messages=data.messages;
+        $("#connection-status").textContent="Terhubung";$("#connection-status").className="mt-3 text-lg font-semibold text-emerald-300";
+        applySettings();fillSettingsForm();renderAdminTables();
+      } catch(error) {
+        $("#connection-status").textContent="Terputus";$("#connection-status").className="mt-3 text-lg font-semibold text-red-300";
+        if(/sesi|session|token|login|expired/i.test(error.message)){logout(false);toast("Sesi admin berakhir, silakan masuk kembali.",true);return;}
+        toast(error.message,true);
+      }
+    }
+    function route() {
+      const admin=location.hash==="#admin"||location.hash.startsWith("#admin/");
+      $("#public-view").classList.toggle("hidden-view",admin);$("#admin-view").classList.toggle("hidden-view",!admin);
+      if(admin){$("#login-view").classList.toggle("hidden-view",!!state.token);$("#dashboard-view").classList.toggle("hidden-view",!state.token);if(state.token){$("#admin-user-label").textContent=state.username||"Administrator";loadAdminData();}}
+      else if(location.hash===""||location.hash==="#")window.scrollTo(0,0);
+    }
+    function setPanel(panel) {
+      state.panel=panel;
+      document.querySelectorAll(".admin-panel").forEach(el=>el.classList.toggle("hidden-view",el.id!=="panel-"+panel));
+      document.querySelectorAll(".admin-link").forEach(el=>el.classList.toggle("active",el.dataset.panel===panel));
+      const title={overview:"Ringkasan",settings:"Tampilan website",projects:"Proyek",gallery:"Galeri foto",links:"Tautan",messages:"Pesan masuk"}[panel]||"Ringkasan";
+      $("#admin-page-title").textContent=title;$("#admin-breadcrumb").textContent=title;
+      $("#admin-sidebar").classList.remove("open");$("#admin-shade").classList.remove("open");
+      if(panel==="messages"&&state.token)loadAdminData();
+    }
+    async function saveItem(type,item,id) {
+      const result=await api("saveItem",{type,item:{...item,...(id?{id}:{})}});
+      const rows=state[type],index=id?rows.findIndex(row=>String(row.id)===String(id)):-1;
+      if(index<0)rows.unshift(result.item||item);else rows[index]={...rows[index],...item,id};
+      renderAdminTables();applySettings();toast("Konten berhasil disimpan.");
+    }
+    function openItemEditor(type,item=null) {
+      const isGallery=type==="gallery",isProject=type==="projects";
+      const label=isProject?"proyek":isGallery?"foto":"tautan";
+      $("#editor-title").textContent=(item?"Edit ":"Tambah ")+label;
+      const fields=isProject
+        ? [["title","Nama proyek","text",true],["category","Peran / kategori","text",false],["year","Tahun","text",false],["description","Deskripsi","textarea",true],["image","URL gambar (opsional)","url",false],["url","URL proyek (opsional)","url",false]]
+        : isGallery?[["title","Judul","text",true],["description","Deskripsi","text",true],["image","URL gambar","url",true]]:[["title","Nama tautan","text",true],["url","Alamat tautan","url",true]];
+      const form=$("#item-form");
+      form.innerHTML=fields.map(([name,fieldLabel,inputType,required])=>`<label class="block text-xs text-gray-300">${fieldLabel}${inputType==="textarea"?`<textarea class="admin-input mt-2 min-h-24" name="${name}" ${required?"required":""} maxlength="1000">${esc(item?.[name]||"")}</textarea>`:`<input class="admin-input mt-2" name="${name}" type="${inputType}" value="${esc(item?.[name]||"")}" ${required?"required":""} maxlength="500">`}</label>`).join("")+`<div class="flex gap-3 pt-2"><button id="cancel-editor" type="button" class="flex-1 rounded-lg border border-white/10 py-3 text-sm text-gray-300">Batal</button><button type="submit" class="gold-button flex-1 rounded-lg py-3 text-sm font-bold">Simpan</button></div>`;
+      form.dataset.type=type;form.dataset.id=item?.id||"";
+      const modal=$("#item-editor");modal.classList.remove("hidden");modal.classList.add("flex");
+      $("#cancel-editor").addEventListener("click",closeEditor);
+      form.onsubmit=async event=>{
+        event.preventDefault();const values=Object.fromEntries(new FormData(form).entries());
+        const urls=isProject?["image","url"]:isGallery?["image"]:["url"];
+        if(urls.some(key=>values[key]&&!validUrl(values[key]))){toast("Masukkan URL gambar/tautan yang valid (http atau https).",true);return;}
+        try{await saveItem(type,values,form.dataset.id);closeEditor();}catch(error){toast(error.message,true);}
+      };
+    }
+    function closeEditor(){const modal=$("#item-editor");modal.classList.add("hidden");modal.classList.remove("flex");}
+    function logout(message=true){state.token="";state.username="";sessionStorage.removeItem("zaki_admin_token");sessionStorage.removeItem("zaki_admin_user");route();if(message)toast("Anda telah keluar dari admin.");}
+    $("#copyright-year").textContent=new Date().getFullYear();
+    applySettings();renderAdminTables();observeReveals();loadPublicData();window.addEventListener("hashchange",route);route();
+    $("#mobile-nav-button").addEventListener("click",()=>$("#mobile-nav").classList.toggle("hidden"));
+    $("#mobile-nav").querySelectorAll("a").forEach(link=>link.addEventListener("click",()=>$("#mobile-nav").classList.add("hidden")));
+    document.querySelectorAll(".admin-link").forEach(button=>button.addEventListener("click",()=>setPanel(button.dataset.panel)));
+    document.querySelectorAll(".go-panel").forEach(button=>button.addEventListener("click",()=>setPanel(button.dataset.target)));
+    $("#open-admin-menu").addEventListener("click",()=>{$("#admin-sidebar").classList.add("open");$("#admin-shade").classList.add("open");});
+    $("#close-admin-menu").addEventListener("click",()=>{$("#admin-sidebar").classList.remove("open");$("#admin-shade").classList.remove("open");});
+    $("#admin-shade").addEventListener("click",()=>{$("#admin-sidebar").classList.remove("open");$("#admin-shade").classList.remove("open");});
+    $("#logout-button").addEventListener("click",()=>logout());
+    $("#login-form").addEventListener("submit",async event=>{
+      event.preventDefault();const form=event.currentTarget,button=form.querySelector("button"),values=Object.fromEntries(new FormData(form).entries());
+      button.disabled=true;button.textContent="Memverifikasi...";
+      try{const data=await api("login",values);state.token=data.token;state.username=data.username||values.username;sessionStorage.setItem("zaki_admin_token",state.token);sessionStorage.setItem("zaki_admin_user",state.username);route();toast("Berhasil masuk ke dashboard.");await loadAdminData();}
+      catch(error){toast(error.message,true);}
+      finally{button.disabled=false;button.textContent="Masuk ke dashboard →";}
+    });
+    $("#settings-form").addEventListener("submit",async event=>{
+      event.preventDefault();const form=event.currentTarget,settings={};
+      for(const [key,value] of new FormData(form).entries())settings[key]=value;
+      for(const input of form.querySelectorAll('input[type="checkbox"]'))settings[input.name]=input.checked;
+      for(const key of ["profileImage","galleryMore","spotifyUrl"])if(settings[key]&&!validUrl(settings[key])){toast("Periksa URL pada pengaturan "+key+".",true);return;}
+      settings.accentColor=settings.accentColor||DEFAULTS.settings.accentColor;settings.backgroundColor=settings.backgroundColor||DEFAULTS.settings.backgroundColor;
+      try{await api("saveSettings",{settings});state.settings={...state.settings,...settings};applySettings();fillSettingsForm();toast("Tampilan website berhasil diperbarui.");}
+      catch(error){toast(error.message,true);}
+    });
+    $("#add-gallery-item").addEventListener("click",()=>openItemEditor("gallery"));
+    $("#add-project-item").addEventListener("click",()=>openItemEditor("projects"));
+    $("#add-link-item").addEventListener("click",()=>openItemEditor("links"));
+    $("#refresh-messages").addEventListener("click",()=>loadAdminData());
+    $("#editor-close").addEventListener("click",closeEditor);
+    $("#item-editor").addEventListener("click",event=>{if(event.target.id==="item-editor")closeEditor();});
+    $("#admin-view").addEventListener("click",async event=>{
+      const edit=event.target.closest(".edit-item"),del=event.target.closest(".delete-item");
+      if(edit){const item=state[edit.dataset.type].find(row=>String(row.id)===edit.dataset.id);if(item)openItemEditor(edit.dataset.type,item);}
+      if(del){
+        const type=del.dataset.type,id=del.dataset.id,item=state[type].find(row=>String(row.id)===id);
+        if(!item||!confirm(`Hapus "${item.title}"? Tindakan ini tidak dapat dibatalkan.`))return;
+        try{await api("deleteItem",{type,id});state[type]=state[type].filter(row=>String(row.id)!==String(id));renderAdminTables();applySettings();toast("Konten berhasil dihapus.");}
+        catch(error){toast(error.message,true);}
+      }
+      const deleteMessage=event.target.closest(".delete-message");
+      if(deleteMessage){
+        const id=deleteMessage.dataset.id;
+        if(!id||!confirm("Hapus pesan ini? Tindakan ini tidak dapat dibatalkan."))return;
+        try{await api("deleteMessage",{id});state.messages=state.messages.filter(message=>String(message.id)!==String(id));renderAdminTables();toast("Pesan berhasil dihapus.");}
+        catch(error){toast(error.message,true);}
+      }
+    });
+    $("#gallery-grid").addEventListener("click",event=>{
+      const card=event.target.closest("[data-photo-id]");if(!card)return;
+      const item=state.gallery.find(row=>String(row.id)===card.dataset.photoId);if(!item)return;
+      $("#lightbox-image").src=validUrl(item.image);$("#lightbox-image").alt=item.title;$("#lightbox-caption").textContent=item.title;
+      $("#lightbox").classList.remove("hidden");$("#lightbox").classList.add("flex");
+    });
+    function closeLightbox(){const modal=$("#lightbox");modal.classList.add("hidden");modal.classList.remove("flex");}
+    $("#lightbox-close").addEventListener("click",closeLightbox);$("#lightbox").addEventListener("click",event=>{if(event.target.id==="lightbox")closeLightbox();});
+    document.addEventListener("keydown",event=>{if(event.key==="Escape"){closeLightbox();closeEditor();}});
+    $("#contact-form").addEventListener("submit",async event=>{
+      event.preventDefault();const form=event.currentTarget,button=$("#contact-submit"),message=Object.fromEntries(new FormData(form).entries());
+      button.disabled=true;button.textContent="MENGIRIM...";
+      try{if(API_ENABLED){await api("contact",{message});toast("Terima kasih, pesan Anda berhasil dikirim.");form.reset();}
+        else {const subject=encodeURIComponent("Pesan dari website - "+message.name),body=encodeURIComponent(message.message+"\n\nDari: "+message.name+" ("+message.email+")");location.href="mailto:"+encodeURIComponent(state.settings.email)+"?subject="+subject+"&body="+body;toast("Aplikasi email dibuka untuk mengirim pesan.");}}
+      catch(error){toast("Pesan belum terkirim dan tidak tersimpan. Periksa koneksi admin terlebih dahulu.",true);}
+      finally{button.disabled=false;button.textContent="SEND";}
+    });
+  </script>
+</body>
+</html>
