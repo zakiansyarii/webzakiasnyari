@@ -424,9 +424,10 @@
       $("#links-grid").innerHTML=state.links.map((item,index)=>`<a class="tool-card reveal rounded-lg px-4 py-4 text-center text-xs font-semibold tracking-wide text-yellow-400" style="transition-delay:${index*40}ms" href="${esc(validUrl(item.url)||"#")}" target="_blank" rel="noreferrer">${esc(item.title)} <span class="ml-1 text-gray-500">↗</span></a>`).join("")||'<p class="text-sm text-gray-500">Belum ada tautan tambahan.</p>';
       observeReveals();
     }
+    let revealObserver;
     function observeReveals() {
-      const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add("visible");observer.unobserve(entry.target);}}),{threshold:.12});
-      document.querySelectorAll(".reveal:not(.visible)").forEach(el=>observer.observe(el));
+      if(!revealObserver)revealObserver=new IntersectionObserver(entries=>entries.forEach(entry=>entry.target.classList.toggle("visible",entry.isIntersecting)),{threshold:.12});
+      document.querySelectorAll(".reveal").forEach(el=>revealObserver.observe(el));
     }
     function renderAdminTables() {
       $("#stat-projects").textContent=state.projects.length;$("#stat-gallery").textContent=state.gallery.length;$("#stat-links").textContent=state.links.length;
