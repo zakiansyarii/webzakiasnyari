@@ -236,7 +236,22 @@
                   <label class="text-xs text-gray-400 sm:col-span-2">Deskripsi kontak<textarea class="admin-input mt-2 min-h-20" name="contactDescription" maxlength="400"></textarea></label>
                 </div></div>
                 <div class="rounded-xl border border-white/10 bg-[#151a24] p-5"><h3 class="mb-4 text-sm font-semibold text-yellow-400">Warna situs</h3><div class="grid gap-4 sm:grid-cols-2"><label class="text-xs text-gray-400">Warna aksen<input class="admin-input mt-2 h-12 p-1" name="accentColor" type="color"></label><label class="text-xs text-gray-400">Warna latar utama<input class="admin-input mt-2 h-12 p-1" name="backgroundColor" type="color"></label></div></div>
-                <div class="rounded-xl border border-white/10 bg-[#151a24] p-5"><h3 class="mb-4 text-sm font-semibold text-yellow-400">Bagian yang ditampilkan</h3><div class="grid gap-3 sm:grid-cols-2"><label class="flex items-center gap-3 text-sm text-gray-300"><input class="accent-yellow-400" name="showProjects" type="checkbox">Proyek</label><label class="flex items-center gap-3 text-sm text-gray-300"><input class="accent-yellow-400" name="showGallery" type="checkbox">Galeri foto</label><label class="flex items-center gap-3 text-sm text-gray-300"><input class="accent-yellow-400" name="showSongs" type="checkbox">Bagian lagu</label><label class="flex items-center gap-3 text-sm text-gray-300"><input class="accent-yellow-400" name="showLinks" type="checkbox">Tautan tambahan</label><label class="flex items-center gap-3 text-sm text-gray-300"><input class="accent-yellow-400" name="showContact" type="checkbox">Bagian kontak</label></div></div>
+                <input name="homeSectionOrder" type="hidden">
+                <div class="rounded-xl border border-white/10 bg-[#151a24] p-5">
+                  <h3 class="mb-2 text-sm font-semibold text-yellow-400">Bagian yang ditampilkan</h3><p class="mb-4 text-xs text-gray-500">Pilih bagian yang ingin tampil di halaman utama.</p>
+                  <div class="grid gap-3 sm:grid-cols-2">
+                    <label class="flex items-center gap-3 text-sm text-gray-300"><input class="accent-yellow-400" name="showHero" type="checkbox">Profil utama</label>
+                    <label class="flex items-center gap-3 text-sm text-gray-300"><input class="accent-yellow-400" name="showProjects" type="checkbox">Proyek</label>
+                    <label class="flex items-center gap-3 text-sm text-gray-300"><input class="accent-yellow-400" name="showGallery" type="checkbox">Galeri foto</label>
+                    <label class="flex items-center gap-3 text-sm text-gray-300"><input class="accent-yellow-400" name="showSongs" type="checkbox">Bagian lagu</label>
+                    <label class="flex items-center gap-3 text-sm text-gray-300"><input class="accent-yellow-400" name="showLinks" type="checkbox">Tautan tambahan</label>
+                    <label class="flex items-center gap-3 text-sm text-gray-300"><input class="accent-yellow-400" name="showContact" type="checkbox">Bagian kontak</label>
+                  </div>
+                </div>
+                <div class="rounded-xl border border-white/10 bg-[#151a24] p-5">
+                  <h3 class="mb-2 text-sm font-semibold text-yellow-400">Urutan tata letak</h3><p class="mb-4 text-xs text-gray-500">Gunakan panah untuk mengatur urutan bagian di halaman utama.</p>
+                  <ol id="home-layout-list" class="space-y-2"></ol>
+                </div>
                 <div class="flex justify-end"><button class="gold-button rounded-lg px-6 py-3 text-sm font-bold" type="submit">Simpan tampilan</button></div>
               </form>
             </section>
@@ -269,7 +284,8 @@
         spotifyUrl:"https://open.spotify.com/embed/track/6RUKPb4LETWmmr3iAEQktW?utm_source=generator",
         linksHeading:"Ruang lainnya",contactHeading:"Hubungi Saya",
         contactDescription:"Punya pertanyaan atau ingin menyampaikan sesuatu? Kirimkan pesan kepada saya.",
-        accentColor:"#eab308",backgroundColor:"#10141e",showProjects:true,showGallery:true,showSongs:true,showLinks:true,showContact:true
+        accentColor:"#eab308",backgroundColor:"#10141e",showHero:true,showProjects:true,showGallery:true,showSongs:true,showLinks:true,showContact:true,
+        homeSectionOrder:"home,projects,gallery,songs,links,contact"
       },
       projects:[],
       gallery:[
@@ -289,6 +305,14 @@
       ]
     };
     const state={settings:{...DEFAULTS.settings},projects:[],gallery:DEFAULTS.gallery.map(item=>({...item})),links:DEFAULTS.links.map(item=>({...item})),messages:[],token:sessionStorage.getItem("zaki_admin_token")||"",username:sessionStorage.getItem("zaki_admin_user")||"",panel:"overview"};
+    const HOME_SECTIONS=[
+      {id:"home",label:"Profil utama",navId:"nav-home",showKey:"showHero"},
+      {id:"projects",label:"Proyek",navId:"nav-projects",showKey:"showProjects"},
+      {id:"gallery",label:"Galeri foto",navId:"nav-gallery",showKey:"showGallery"},
+      {id:"songs",label:"Bagian lagu",navId:"nav-songs",showKey:"showSongs"},
+      {id:"links",label:"Tautan tambahan",navId:null,showKey:"showLinks"},
+      {id:"contact",label:"Kontak",navId:"nav-contact",showKey:"showContact"}
+    ];
     const $=selector=>document.querySelector(selector);
     const esc=value=>String(value??"").replace(/[&<>"']/g,char=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[char]));
     function validUrl(value) {
@@ -345,6 +369,40 @@
       if(!response.ok||!result.secure_url) throw new Error(result.error?.message||"Cloudinary gagal mengunggah "+file.name+".");
       return result.secure_url;
     }
+    function normalizeHomeSectionOrder(value) {
+      const requested=Array.isArray(value)?value:String(value||"").split(",");
+      const valid=requested.filter(id=>HOME_SECTIONS.some(section=>section.id===id));
+      return [...new Set(valid),...HOME_SECTIONS.map(section=>section.id).filter(id=>!valid.includes(id))];
+    }
+    function renderHomeLayoutControls(value) {
+      const list=$("#home-layout-list"),order=normalizeHomeSectionOrder(value);
+      $("#settings-form").elements.namedItem("homeSectionOrder").value=order.join(",");
+      list.innerHTML=order.map((id,index)=>{
+        const section=HOME_SECTIONS.find(item=>item.id===id);
+        return `<li class="flex items-center justify-between gap-3 rounded-lg border border-white/10 bg-[#0d1119] px-3 py-2.5"><span class="text-sm text-gray-200">${index+1}. ${section.label}</span><span class="flex gap-2"><button class="home-layout-move rounded border border-white/10 px-3 py-1 text-sm text-gray-300 transition hover:border-yellow-400/50 disabled:opacity-30" type="button" data-section="${id}" data-direction="-1" aria-label="Pindahkan ${section.label} ke atas" ${index===0?"disabled":""}>↑</button><button class="home-layout-move rounded border border-white/10 px-3 py-1 text-sm text-gray-300 transition hover:border-yellow-400/50 disabled:opacity-30" type="button" data-section="${id}" data-direction="1" aria-label="Pindahkan ${section.label} ke bawah" ${index===order.length-1?"disabled":""}>↓</button></span></li>`;
+      }).join("");
+    }
+    function applyHomeLayout(settings) {
+      const order=normalizeHomeSectionOrder(settings.homeSectionOrder);
+      const container=$("#home-page-content"),footer=container.querySelector("footer");
+      order.forEach(id=>container.insertBefore($("#"+id),footer));
+      const desktopNav=$("#nav-home").parentElement,mobileNav=$("#mobile-nav div");
+      order.forEach(id=>{
+        const section=HOME_SECTIONS.find(item=>item.id===id);
+        if(!section.navId)return;
+        const desktopLink=$("#"+section.navId);
+        const mobileLink=$(`#mobile-nav a[href="#${id}"]`);
+        desktopNav.appendChild(desktopLink);
+        if(mobileLink)mobileNav.appendChild(mobileLink);
+      });
+      HOME_SECTIONS.forEach(section=>{
+        if(!section.navId)return;
+        const visible=Boolean(settings[section.showKey]);
+        const desktopLink=$("#"+section.navId),mobileLink=$(`#mobile-nav a[href="#${section.id}"]`);
+        desktopLink.classList.toggle("hidden-view",!visible||!desktopLink.textContent);
+        if(mobileLink)mobileLink.classList.toggle("hidden-view",!visible||!mobileLink.textContent);
+      });
+    }
     function applySettings() {
       const s=state.settings,root=document.documentElement;
       root.style.setProperty("--gold",s.accentColor||DEFAULTS.settings.accentColor);
@@ -357,8 +415,8 @@
       $("#brand").textContent=s.siteName??"";$("#footer-name").textContent=s.siteName??"";document.title=s.siteName??"";
       $("#nav-home").textContent=s.navHome??"";$("#nav-projects").textContent=s.navProjects??"";$("#nav-gallery").textContent=s.navGallery??"";
       $("#nav-songs").textContent=s.navSongs??"";$("#nav-contact").textContent=s.navContact??"";
-      $("#mobile-nav").querySelectorAll("a").forEach((link,index)=>{link.textContent=[s.navHome,s.navProjects,s.navGallery,s.navSongs,s.navContact][index]??"";link.classList.toggle("hidden-view",!link.textContent);});
-      ["home","projects","gallery","songs","contact"].forEach(name=>$("#nav-"+name).classList.toggle("hidden-view",!$("#nav-"+name).textContent));
+      const mobileLabels={home:s.navHome,projects:s.navProjects,gallery:s.navGallery,songs:s.navSongs,contact:s.navContact};
+      $("#mobile-nav").querySelectorAll("a").forEach(link=>{const sectionId=link.getAttribute("href").slice(1);link.textContent=mobileLabels[sectionId]??"";});
       $("#hero-heading").textContent=s.heroHeading;$("#hero-name").textContent=s.heroName;$("#hero-quote").textContent=s.heroQuote;
       $("#hero-primary").textContent=s.primaryButton??"";$("#hero-secondary").textContent=s.secondaryButton??"";
       $("#hero-primary").href="#contact";$("#hero-secondary").href="#gallery";$("#hero-primary").classList.toggle("hidden-view",!s.primaryButton);$("#hero-secondary").classList.toggle("hidden-view",!s.secondaryButton);
@@ -371,10 +429,12 @@
       $("#links-heading").textContent=s.linksHeading??"";$("#contact-heading").textContent=s.contactHeading??"";$("#contact-description").textContent=s.contactDescription??"";
       const email=(s.email||"").trim();$("#contact-email").textContent=email?email+" ↗":"";$("#contact-email").href=email?"mailto:"+email:"";$("#contact-email").classList.toggle("hidden-view",!email);
       renderProjects();
-      $("#projects").classList.toggle("hidden-view",!s.showProjects);$("#nav-projects").classList.toggle("hidden-view",!s.showProjects||!$("#nav-projects").textContent);
-      $("#gallery").classList.toggle("hidden-view",!s.showGallery);$("#nav-gallery").classList.toggle("hidden-view",!s.showGallery||!$("#nav-gallery").textContent);
-      $("#songs").classList.toggle("hidden-view",!s.showSongs);$("#nav-songs").classList.toggle("hidden-view",!s.showSongs||!$("#nav-songs").textContent);
-      $("#links").classList.toggle("hidden-view",!s.showLinks);$("#contact").classList.toggle("hidden-view",!s.showContact);$("#nav-contact").classList.toggle("hidden-view",!s.showContact||!$("#nav-contact").textContent);
+      $("#projects").classList.toggle("hidden-view",!s.showProjects);
+      $("#gallery").classList.toggle("hidden-view",!s.showGallery);
+      $("#songs").classList.toggle("hidden-view",!s.showSongs);
+      $("#links").classList.toggle("hidden-view",!s.showLinks);$("#contact").classList.toggle("hidden-view",!s.showContact);
+      $("#home").classList.toggle("hidden-view",!s.showHero);
+      applyHomeLayout(s);
       renderGallery();renderLinks();
     }
     function spotifyEmbed(value) {
@@ -452,6 +512,7 @@
     function fillSettingsForm() {
       const form=$("#settings-form"),s=state.settings;
       for(const [key,value] of Object.entries(s)){const input=form.elements.namedItem(key);if(!input)continue;if(input.type==="checkbox")input.checked=Boolean(value);else input.value=value??"";}
+      renderHomeLayoutControls(s.homeSectionOrder);
     }
     async function loadPublicData() {
       if(!API_ENABLED)return true;
@@ -601,6 +662,14 @@
       settings.accentColor=settings.accentColor||DEFAULTS.settings.accentColor;settings.backgroundColor=settings.backgroundColor||DEFAULTS.settings.backgroundColor;
       try{await api("saveSettings",{settings});state.settings={...state.settings,...settings};applySettings();fillSettingsForm();toast("Tampilan website berhasil diperbarui.");}
       catch(error){toast(error.message,true);}
+    });
+    $("#home-layout-list").addEventListener("click",event=>{
+      const button=event.target.closest(".home-layout-move");if(!button)return;
+      const order=normalizeHomeSectionOrder($("#settings-form").elements.namedItem("homeSectionOrder").value);
+      const index=order.indexOf(button.dataset.section),next=index+Number(button.dataset.direction);
+      if(index<0||next<0||next>=order.length)return;
+      [order[index],order[next]]=[order[next],order[index]];
+      renderHomeLayoutControls(order);
     });
     $("#upload-profile-image").addEventListener("click",()=>$("#profile-image-file").click());
     $("#profile-image-file").addEventListener("change",async event=>{
