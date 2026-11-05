@@ -1,12 +1,16 @@
+const crypto = require("node:crypto");
+
 const ALLOWED_ACTIONS = new Set([
   "publicData",
   "login",
   "adminData",
+  "verifySession",
   "saveSettings",
   "saveItem",
   "deleteItem",
   "deleteMessage",
-  "contact"
+  "contact",
+  "cloudinarySignature"
 ]);
 
 module.exports = async function handler(request, response) {
@@ -37,6 +41,10 @@ module.exports = async function handler(request, response) {
     return response.status(400).json({ ok: false, error: "Aksi tidak dikenali." });
   }
 
+  if (payload.action === "cloudinarySignature") {
+    return createCloudinarySignature(payload, endpoint, response);
+  }
+
   try {
     const upstream = await fetch(endpoint, {
       method: "POST",
@@ -58,3 +66,60 @@ module.exports = async function handler(request, response) {
     return response.status(502).json({ ok: false, error: "Tidak dapat menghubungi Google Apps Script." });
   }
 };
+
+async function createCloudinarySignature(payload, endpoint, response) {
+  const cloudName = process.env.CLOUDINARY_CLOUD_NAME || "";
+  const apiKey = process.env.CLOUDINARY_API_KEY || "";
+  const apiSecret = process.env.CLOUDINARY_API_SECRET || "";
+  if (!cloudName || !apiKey || !apiSecret) {
+    return response.status(503).json({
+      ok: false,
+      error: "Upload belum dikonfigurasi. Isi CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, dan CLOUDINARY_API_SECRET di Vercel."
+    });
+  }
+
+  const folder = payload.folder;
+  if (!["gallery", "projects", "profile"].includes(folder)) {
+    return response.status(400).json({ ok: false, error: "Folder upload tidak valid." });
+  }
+  if (typeof payload.token !== "string" || !payload.token) {
+    return response.status(401).json({ ok: false, error: "Sesi admin tidak valid. Silakan masuk kembali." });
+  }
+
+  try {
+    const verification = await fetch(endpoint, {
+      method: "POST",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify({ action: "verifySession", token: payload.token })
+    });
+    if (!verification.ok) {
+      return response.status(502).json({ ok: false, error: "Tidak dapat memverifikasi sesi admin." });
+    }
+
+    const result = await verification.json();
+    if (!result.ok) {
+      return response.status(401).json({ ok: false, error: result.error || "Sesi admin tidak valid. Silakan masuk kembali." });
+    }
+
+    const timestamp = Math.floor(Date.now() / 1000);
+    const uploadFolder = "portfolio/" + folder;
+    const parameters = { folder: uploadFolder, timestamp: String(timestamp) };
+    const signatureBase = Object.keys(parameters).sort()
+      .map((key) => key + "=" + parameters[key])
+      .join("&");
+    const signature = crypto.createHash("sha1")
+      .update(signatureBase + apiSecret)
+      .digest("hex");
+
+    return response.status(200).json({
+      ok: true,
+      cloudName,
+      apiKey,
+      timestamp,
+      folder: uploadFolder,
+      signature
+    });
+  } catch {
+    return response.status(502).json({ ok: false, error: "Tidak dapat memverifikasi sesi admin ke Google Apps Script." });
+  }
+}
