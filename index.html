@@ -908,7 +908,7 @@
         button.textContent="Ganti gambar";
         toast("Sertifikat berhasil diunggah. Tekan Simpan tampilan untuk menerapkannya.");
       } catch(error) {
-        status.textContent="Gagal mengunggah gambar.";
+        status.textContent=error.message||"Upload gambar gagal.";
         toast(error.message,true);
       } finally {
         button.disabled=false;fileInput.value="";
