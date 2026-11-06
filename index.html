@@ -11,48 +11,64 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
   <style>
-    :root { --ink:#111827; --gold:#eab308; --gold-deep:#dda90e; --body:#d1d5db; --panel:#10141e; }
+    :root { --ink:#080b16; --gold:#00f5d4; --gold-deep:#00f5d4; --neon-secondary:#b026ff; --neon-glow:#ff2bd6; --body:#d1d5db; --panel:#0d1222; }
     * { box-sizing:border-box; }
     html { scroll-behavior:smooth; scroll-padding-top:72px; }
-    body { margin:0; color:#f8fafc; background:#10141e; font-family:"DM Sans",sans-serif; }
+    body { margin:0; color:#f8fafc; background:var(--ink); font-family:"DM Sans",sans-serif; }
     button,input,textarea,select { font:inherit; }
     .serif { font-family:"Playfair Display",Georgia,serif; }
-    .site-nav { background:rgba(3,5,9,.94); backdrop-filter:blur(14px); }
+    .site-nav { background:color-mix(in srgb,var(--ink) 92%,#000)!important; backdrop-filter:blur(14px); border-bottom:1px solid color-mix(in srgb,var(--gold) 18%,transparent); }
     .nav-link { transition:color .2s ease; }
     .nav-link:hover,.nav-link.active { color:var(--gold); }
     .text-yellow-400 { color:var(--gold)!important; }
-    .bg-yellow-400 { background-color:var(--gold)!important; }
-    .hero-section { background:linear-gradient(112deg,#080b11 0%,#111827 56%,#192234 100%); }
-    .hero-image { border:4px solid var(--gold); box-shadow:0 12px 50px #0005; }
-    .gold-button { background:var(--gold); color:#111; transition:transform .2s ease,filter .2s ease; }
-    .gold-button:hover { transform:translateY(-2px); filter:brightness(1.07); }
-    .outline-button { color:var(--gold); border:1px solid var(--gold); transition:background .2s ease,color .2s ease; }
-    .outline-button:hover { color:#111; background:var(--gold); }
+    .text-yellow-300 { color:var(--neon-secondary)!important; }
+    .bg-yellow-400 { background-color:var(--gold)!important; box-shadow:0 0 16px color-mix(in srgb,var(--gold) 28%,transparent); }
+    .border-yellow-400\/20 { border-color:color-mix(in srgb,var(--gold) 20%,transparent)!important; }
+    .border-yellow-400\/30 { border-color:color-mix(in srgb,var(--gold) 30%,transparent)!important; }
+    .border-yellow-400\/40 { border-color:color-mix(in srgb,var(--gold) 40%,transparent)!important; }
+    .border-yellow-400\/50 { border-color:color-mix(in srgb,var(--gold) 50%,transparent)!important; }
+    .border-yellow-500\/60 { border-color:color-mix(in srgb,var(--gold) 60%,transparent)!important; }
+    .bg-yellow-400\/5 { background-color:color-mix(in srgb,var(--gold) 5%,transparent)!important; }
+    .bg-yellow-400\/10 { background-color:color-mix(in srgb,var(--gold) 10%,transparent)!important; }
+    .hover\:border-yellow-400\/50:hover { border-color:color-mix(in srgb,var(--gold) 50%,transparent)!important; }
+    .hero-section { background:radial-gradient(ellipse at 82% 30%,color-mix(in srgb,var(--neon-secondary) 13%,transparent),transparent 35%),linear-gradient(112deg,color-mix(in srgb,var(--ink) 65%,#03040b) 0%,var(--ink) 56%,color-mix(in srgb,var(--neon-secondary) 9%,var(--ink)) 100%); }
+    .portrait-frame { position:relative; isolation:isolate; width:clamp(220px,32vw,320px); aspect-ratio:1; padding:8px; border-radius:2.5rem 2.5rem 7rem 2.5rem; background:linear-gradient(145deg,var(--gold),var(--neon-secondary) 58%,var(--neon-glow)); box-shadow:0 0 26px color-mix(in srgb,var(--gold) 35%,transparent),0 24px 70px #0008; transform:rotate(2deg); }
+    .portrait-frame::before { position:absolute; z-index:-1; inset:12px -14px -14px 12px; border:1px solid color-mix(in srgb,var(--neon-secondary) 70%,transparent); border-radius:2.5rem 2.5rem 7rem 2.5rem; content:""; }
+    .hero-image { width:100%; height:100%; border-radius:2rem 2rem 6.5rem 2rem; object-fit:cover; transform:rotate(-2deg); }
+    .gold-button { background:var(--gold); color:#061014; box-shadow:0 0 18px color-mix(in srgb,var(--gold) 28%,transparent); transition:transform .2s ease,filter .2s ease,box-shadow .2s ease; }
+    .gold-button:hover { transform:translateY(-2px); filter:brightness(1.07); box-shadow:0 0 24px color-mix(in srgb,var(--gold) 45%,transparent); }
+    .outline-button { color:var(--gold); border:1px solid var(--gold); box-shadow:inset 0 0 14px color-mix(in srgb,var(--gold) 7%,transparent); transition:background .2s ease,color .2s ease; }
+    .outline-button:hover { color:#061014; background:var(--gold); }
     .gallery-card { transition:transform .3s ease,box-shadow .3s ease; }
     .gallery-card:hover { transform:translateY(-5px); box-shadow:0 18px 35px #0005; }
     .gallery-card img { transition:transform .45s ease; }
     .gallery-card:hover img { transform:scale(1.045); }
-    .page-section { background:linear-gradient(130deg,#121823,#172131); }
+    .page-section { background:linear-gradient(130deg,color-mix(in srgb,var(--ink) 78%,#171c2c),color-mix(in srgb,var(--ink) 68%,#1d2436)); }
     .tool-card { background:#151b27; border:1px solid #ffffff12; transition:transform .2s ease,border-color .2s ease; }
-    .tool-card:hover { transform:translateY(-3px); border-color:#eab30880; }
+    .tool-card:hover { transform:translateY(-3px); border-color:color-mix(in srgb,var(--neon-secondary) 70%,transparent); box-shadow:0 0 20px color-mix(in srgb,var(--neon-secondary) 15%,transparent); }
+    .skill-chip { border:1px solid color-mix(in srgb,var(--neon-secondary) 35%,transparent); border-radius:9999px; background:color-mix(in srgb,var(--neon-secondary) 7%,transparent); padding:.45rem .75rem; color:#e5e7eb; font-size:.7rem; }
     .reveal { opacity:0; transform:translateY(18px); transition:opacity .65s ease,transform .65s ease; }
     .reveal.visible { opacity:1; transform:translateY(0); }
-    .admin-backdrop { background:#0b0e15; }
-    .admin-sidebar { background:#11151f; border-right:1px solid #ffffff12; }
-    .admin-link.active { color:#facc15; background:#eab30818; }
+    .admin-backdrop { background:var(--ink); }
+    .admin-sidebar { background:color-mix(in srgb,var(--ink) 78%,#121728); border-right:1px solid color-mix(in srgb,var(--neon-secondary) 22%,transparent); }
+    .admin-link.active { color:var(--gold); background:color-mix(in srgb,var(--gold) 10%,transparent); }
     .admin-input { width:100%; border:1px solid #ffffff1a; border-radius:.6rem; background:#0d1119; padding:.7rem .8rem; color:#f8fafc; outline:none; }
-    .admin-input:focus { border-color:#eab308a0; box-shadow:0 0 0 3px #eab30820; }
+    .admin-input:focus { border-color:color-mix(in srgb,var(--gold) 70%,transparent); box-shadow:0 0 0 3px color-mix(in srgb,var(--gold) 14%,transparent); }
     .admin-input::placeholder { color:#6b7280; }
     .admin-table th,.admin-table td { border-bottom:1px solid #ffffff10; padding:.85rem 1rem; text-align:left; }
     .admin-table th { color:#9ca3af; font-size:.68rem; font-weight:600; letter-spacing:.12em; text-transform:uppercase; }
     .modal-bg { background:#000c; backdrop-filter:blur(5px); }
     .toast { animation:toast-in .2s ease-out both; }
-    .sync-screen { position:fixed; inset:0; z-index:200; display:grid; place-items:center; background:radial-gradient(ellipse at 50% 35%,#1d2738 0%,#10141e 55%,#090c12 100%); opacity:1; transition:opacity .4s ease; }
+    .sync-screen { position:fixed; inset:0; z-index:200; display:grid; place-items:center; overflow:hidden; background:radial-gradient(ellipse at 50% 42%,color-mix(in srgb,var(--neon-secondary) 20%,var(--ink)) 0%,var(--ink) 50%,#05060c 100%); opacity:1; transition:opacity .45s ease; }
     .sync-screen.leaving { opacity:0; pointer-events:none; }
-    .sync-spinner { width:3.25rem; height:3.25rem; border:2px solid rgba(255,255,255,.14); border-top-color:var(--gold); border-right-color:rgba(234,179,8,.45); border-radius:50%; animation:sync-spin .9s linear infinite; }
-    .sync-mark { position:absolute; inset:0; display:grid; place-items:center; color:var(--gold); font-size:.85rem; }
+    .sync-orbit { position:relative; display:grid; width:5.25rem; height:5.25rem; place-items:center; }
+    .sync-orbit::before,.sync-orbit::after { position:absolute; inset:0; border:1px solid #ffffff16; border-radius:50%; content:""; }
+    .sync-orbit::after { inset:9px; border-color:color-mix(in srgb,var(--neon-glow) 42%,transparent); }
+    .sync-spinner { width:3rem; height:3rem; border:2px solid transparent; border-top-color:var(--gold); border-right-color:var(--neon-secondary); border-radius:50%; animation:sync-spin .9s cubic-bezier(.5,.1,.5,.9) infinite; }
+    .sync-mark { position:absolute; display:grid; width:2rem; height:2rem; place-items:center; border-radius:.7rem; background:linear-gradient(145deg,#fff,var(--gold)); box-shadow:0 0 30px color-mix(in srgb,var(--gold) 55%,transparent); color:#111827; font-family:"Playfair Display",Georgia,serif; font-size:1rem; font-weight:800; }
+    .loading-label { color:#e5e7eb; font-size:.72rem; font-weight:600; letter-spacing:.28em; text-transform:uppercase; animation:loading-breathe 1.6s ease-in-out infinite; }
     @keyframes sync-spin { to { transform:rotate(360deg); } }
-    @keyframes sync-pulse { 50% { opacity:.45; } }
+    @keyframes loading-breathe { 50% { opacity:.45; } }
     @keyframes toast-in { from { opacity:0; transform:translateY(-8px); } to { opacity:1; transform:translateY(0); } }
     @keyframes menu-drop { from { opacity:0; transform:translateY(-8px); } to { opacity:1; transform:translateY(0); } }
     .hidden-view { display:none!important; }
@@ -64,9 +80,10 @@
       #mobile-nav a { padding:.45rem 0; }
       #mobile-nav-button { min-width:42px; min-height:42px; border-color:#ffffff24; background:#ffffff0a; color:#f8fafc; font-size:1.15rem; }
       #home.hero-section { position:relative; min-height:100vh; min-height:100svh; overflow:hidden; padding:68px 22px 24px; }
-      #home.hero-section::before { position:absolute; inset:0; background:radial-gradient(ellipse at 50% 30%,#eab30816,transparent 42%),radial-gradient(ellipse at 90% 85%,#46618b20,transparent 38%); content:""; pointer-events:none; }
+      #home.hero-section::before { position:absolute; inset:0; background:radial-gradient(ellipse at 50% 30%,color-mix(in srgb,var(--gold) 10%,transparent),transparent 42%),radial-gradient(ellipse at 90% 85%,color-mix(in srgb,var(--neon-secondary) 14%,transparent),transparent 38%); content:""; pointer-events:none; }
       #home.hero-section > div { position:relative; gap:18px; }
-      #home .hero-image { width:clamp(190px,54vw,230px); height:clamp(190px,54vw,230px); border-width:3px; box-shadow:0 0 0 10px #eab3080b,0 20px 55px #0008; }
+      #home .portrait-frame { width:clamp(190px,54vw,230px); }
+      #home .hero-image { box-shadow:0 0 0 10px color-mix(in srgb,var(--gold) 5%,transparent); }
       #home h1 { font-size:clamp(2.9rem,13vw,4.1rem); }
       #home #hero-quote { max-width:310px; }
       #home .mt-7 { margin-top:20px; }
@@ -89,12 +106,10 @@
   </style>
 </head>
 <body>
-  <div id="initial-loader" class="sync-screen" role="status" aria-live="polite">
+  <div id="initial-loader" class="sync-screen" role="status" aria-label="Memuat halaman">
     <div class="flex flex-col items-center px-6 text-center">
-      <div class="relative"><div class="sync-spinner"></div><span class="sync-mark">Z</span></div>
-      <p class="mt-6 text-xs font-semibold tracking-[.28em] text-yellow-400">ZAKI ANSYARI</p>
-      <p id="sync-status" class="mt-3 text-sm text-gray-300">Menghubungkan ke Google Sheets...</p>
-      <p class="mt-2 text-xs text-gray-500" style="animation:sync-pulse 1.4s ease-in-out infinite">Menyiapkan portofolio Anda</p>
+      <div class="sync-orbit"><div class="sync-spinner"></div><span class="sync-mark">Z</span></div>
+      <p class="loading-label mt-6">Loading...</p>
     </div>
   </div>
   <div id="toast-root" class="fixed right-4 top-4 z-[120] flex max-w-sm flex-col gap-2" aria-live="polite"></div>
@@ -103,12 +118,12 @@
       <nav class="mx-auto flex h-full w-full max-w-[600px] items-center justify-between px-5 md:w-[75%] md:max-w-[1050px]">
         <a id="brand" href="#home" class="font-bold tracking-wide text-yellow-400">ZAKI ANSYARI</a>
         <div class="hidden items-center gap-7 text-sm text-gray-200 sm:flex">
-          <a id="nav-home" class="nav-link" href="#home">Home</a><a id="nav-projects" class="nav-link" href="#projects">Projects</a><a id="nav-gallery" class="nav-link" href="#gallery">Gallery</a><a id="nav-songs" class="nav-link" href="#songs">Songs</a><a id="nav-contact" class="nav-link" href="#contact">Contact</a>
+          <a id="nav-home" class="nav-link" href="#home">Home</a><a id="nav-about" class="nav-link" href="#about">Tentang</a><a id="nav-projects" class="nav-link" href="#projects">Projects</a><a id="nav-gallery" class="nav-link" href="#gallery">Gallery</a><a id="nav-songs" class="nav-link" href="#songs">Songs</a><a id="nav-contact" class="nav-link" href="#contact">Contact</a>
         </div>
         <button id="mobile-nav-button" class="rounded-lg border border-white/15 px-3 py-1.5 sm:hidden" aria-label="Buka navigasi" aria-expanded="false">☰</button>
       </nav>
       <div id="mobile-nav" class="hidden border-t border-white/10 bg-black/95 px-5 py-3 sm:hidden">
-        <div class="mx-auto flex max-w-6xl flex-col gap-3 text-sm text-gray-200"><a href="#home">Home</a><a href="#projects">Projects</a><a href="#gallery">Gallery</a><a href="#songs">Songs</a><a href="#contact">Contact</a></div>
+        <div class="mx-auto flex max-w-6xl flex-col gap-3 text-sm text-gray-200"><a href="#home">Home</a><a href="#about">Tentang</a><a href="#projects">Projects</a><a href="#gallery">Gallery</a><a href="#songs">Songs</a><a href="#contact">Contact</a></div>
       </div>
     </header>
 
@@ -124,7 +139,34 @@
           </div>
         </div>
         <div class="reveal order-1 flex justify-center md:order-2" style="transition-delay:120ms">
-          <img id="profile-image" class="hero-image h-56 w-56 rounded-full bg-gray-200 object-cover sm:h-64 sm:w-64" src="assets/profile.jpeg" alt="Foto profil Zaki Ansyari">
+          <div class="portrait-frame"><img id="profile-image" class="hero-image bg-gray-200" src="assets/profile.jpeg" alt="Foto profil Zaki Ansyari"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="page-section px-5 py-16 sm:py-20">
+      <div class="mx-auto max-w-6xl">
+        <div class="reveal mb-9"><p id="about-eyebrow" class="text-xs font-semibold uppercase tracking-[.2em] text-yellow-400">Kenali lebih dekat</p><h2 id="about-heading" class="serif mt-2 text-3xl font-bold sm:text-4xl">Tentang Saya</h2><p id="about-description" class="mt-3 max-w-2xl text-sm leading-6 text-gray-400">Perjalanan, hal yang saya pelajari, dan pencapaian yang saya banggakan.</p></div>
+        <div class="grid gap-5 lg:grid-cols-[1.05fr_.95fr]">
+          <article class="reveal rounded-2xl border border-white/10 bg-[#0c111a]/75 p-6 sm:p-8">
+            <span class="inline-flex items-center gap-2 rounded-full border border-yellow-400/20 bg-yellow-400/5 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wider text-yellow-300"><span class="h-1.5 w-1.5 rounded-full bg-yellow-400"></span><span id="about-greeting">Halo, saya Zaki</span></span>
+            <h3 id="about-bio-heading" class="serif mt-5 text-2xl font-bold leading-tight sm:text-3xl">Senang belajar, berkarya, dan terus berkembang.</h3>
+            <p id="about-bio" class="mt-4 whitespace-pre-line text-sm leading-7 text-gray-300">Saya Zaki Ansyari, pelajar di SMK Negeri 1 Amuntai. Saya tertarik pada teknologi dan pengembangan website, serta senang mengubah ide menjadi karya yang bermanfaat. Bagi saya, setiap proyek dan pengalaman baru adalah kesempatan untuk belajar lebih baik.</p>
+          </article>
+          <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-1">
+            <article id="education-card" class="reveal rounded-2xl border border-white/10 bg-[#0c111a]/75 p-6" style="transition-delay:80ms">
+              <p id="education-heading" class="text-[11px] font-semibold uppercase tracking-[.2em] text-yellow-400">Pendidikan</p>
+              <div id="education-list" class="mt-5 space-y-4"></div>
+            </article>
+            <article id="skills-card" class="reveal rounded-2xl border border-white/10 bg-[#0c111a]/75 p-6" style="transition-delay:140ms">
+              <p id="skills-heading" class="text-[11px] font-semibold uppercase tracking-[.2em] text-yellow-400">Keahlian & minat</p>
+              <div id="skills-list" class="mt-4 flex flex-wrap gap-2"></div>
+            </article>
+          </div>
+        </div>
+        <div id="certificates-section" class="reveal mt-12 hidden-view" style="transition-delay:100ms">
+          <div class="mb-5 flex flex-wrap items-end justify-between gap-3"><div><p id="certificates-eyebrow" class="text-xs font-semibold uppercase tracking-[.2em] text-yellow-400">Perjalanan & pencapaian</p><h3 id="certificates-heading" class="serif mt-2 text-2xl font-bold sm:text-3xl">Sertifikat & Pencapaian</h3></div><p id="certificates-description" class="text-xs text-gray-500">Kumpulan pengalaman yang berarti</p></div>
+          <div id="certificates-list" class="grid gap-5 sm:grid-cols-2 xl:grid-cols-3"></div>
         </div>
       </div>
     </section>
@@ -219,13 +261,38 @@
                 <div class="rounded-xl border border-white/10 bg-[#151a24] p-5"><h3 class="mb-4 text-sm font-semibold text-yellow-400">Identitas & hero</h3><div class="grid gap-4 sm:grid-cols-2">
                   <label class="text-xs text-gray-400">Nama/logo<input class="admin-input mt-2" name="siteName" maxlength="60"></label><label class="text-xs text-gray-400">Sapaan<input class="admin-input mt-2" name="heroHeading" maxlength="80"></label>
                   <label class="text-xs text-gray-400">Nama di judul hero<input class="admin-input mt-2" name="heroName" maxlength="60"></label><label class="text-xs text-gray-400">Alamat email<input class="admin-input mt-2" name="email" type="email" maxlength="200"></label>
-                  <label class="text-xs text-gray-400">Menu Home<input class="admin-input mt-2" name="navHome" maxlength="30"></label><label class="text-xs text-gray-400">Menu Gallery<input class="admin-input mt-2" name="navGallery" maxlength="30"></label>
+                  <label class="text-xs text-gray-400">Menu Home<input class="admin-input mt-2" name="navHome" maxlength="30"></label><label class="text-xs text-gray-400">Menu Tentang<input class="admin-input mt-2" name="navAbout" maxlength="30"></label><label class="text-xs text-gray-400">Menu Gallery<input class="admin-input mt-2" name="navGallery" maxlength="30"></label>
                   <label class="text-xs text-gray-400">Menu Projects<input class="admin-input mt-2" name="navProjects" maxlength="30"></label>
                   <label class="text-xs text-gray-400">Menu Songs<input class="admin-input mt-2" name="navSongs" maxlength="30"></label><label class="text-xs text-gray-400">Menu Contact<input class="admin-input mt-2" name="navContact" maxlength="30"></label>
                   <label class="text-xs text-gray-400 sm:col-span-2">Kutipan / deskripsi hero<textarea class="admin-input mt-2 min-h-20" name="heroQuote" maxlength="400"></textarea></label>
                   <label class="text-xs text-gray-400 sm:col-span-2">Foto profil<input class="hidden" name="profileImage" type="hidden"><span class="mt-2 flex flex-wrap items-center gap-3"><button id="upload-profile-image" class="rounded-lg border border-white/10 px-3 py-2 text-xs text-gray-300 transition hover:border-yellow-400/50" type="button">Pilih atau ganti foto profil</button><button id="clear-profile-image" class="rounded-lg border border-white/10 px-3 py-2 text-xs text-gray-400 transition hover:border-red-300/40" type="button">Kosongkan foto</button><input id="profile-image-file" class="hidden" type="file" accept="image/*"><span class="text-[11px] text-gray-500">Pilih gambar dari perangkat, maksimal 10 MB.</span></span></label>
                   <label class="text-xs text-gray-400">Teks tombol utama<input class="admin-input mt-2" name="primaryButton" maxlength="30"></label><label class="text-xs text-gray-400">Teks tombol galeri<input class="admin-input mt-2" name="secondaryButton" maxlength="30"></label>
                 </div></div>
+                <div class="rounded-xl border border-white/10 bg-[#151a24] p-5"><h3 class="mb-4 text-sm font-semibold text-yellow-400">Tentang, pendidikan & sertifikat</h3>
+                  <div class="grid gap-4 sm:grid-cols-2">
+                    <label class="text-xs text-gray-400">Label kecil bagian tentang<input class="admin-input mt-2" name="aboutEyebrow" maxlength="60"></label>
+                    <label class="text-xs text-gray-400">Judul bagian tentang<input class="admin-input mt-2" name="aboutHeading" maxlength="80"></label>
+                    <label class="text-xs text-gray-400">Deskripsi bagian tentang<input class="admin-input mt-2" name="aboutDescription" maxlength="250"></label>
+                    <label class="text-xs text-gray-400">Label sapaan<input class="admin-input mt-2" name="aboutGreeting" maxlength="60"></label>
+                    <label class="text-xs text-gray-400 sm:col-span-2">Judul biodata<input class="admin-input mt-2" name="aboutBioHeading" maxlength="120"></label>
+                    <label class="text-xs text-gray-400 sm:col-span-2">Biodata<textarea class="admin-input mt-2 min-h-24" name="aboutBio" maxlength="1200"></textarea></label>
+                    <label class="text-xs text-gray-400 sm:col-span-2">Keahlian dan minat (pisahkan dengan koma)<textarea class="admin-input mt-2 min-h-20" name="aboutSkills" maxlength="600"></textarea></label>
+                    <label class="text-xs text-gray-400">Judul pendidikan<input class="admin-input mt-2" name="educationHeading" maxlength="60"></label>
+                    <label class="text-xs text-gray-400">Judul keahlian<input class="admin-input mt-2" name="skillsHeading" maxlength="60"></label>
+                    <label class="text-xs text-gray-400">Label sertifikat<input class="admin-input mt-2" name="certificatesEyebrow" maxlength="60"></label>
+                    <label class="text-xs text-gray-400">Judul sertifikat<input class="admin-input mt-2" name="certificatesHeading" maxlength="80"></label>
+                    <label class="text-xs text-gray-400 sm:col-span-2">Deskripsi sertifikat<input class="admin-input mt-2" name="certificatesDescription" maxlength="160"></label>
+                  </div>
+                  <div class="mt-6 border-t border-white/10 pt-5">
+                    <div class="mb-3 flex flex-wrap items-center justify-between gap-3"><div><h4 class="text-sm font-semibold text-gray-200">Pendidikan</h4><p class="mt-1 text-xs text-gray-500">Tambahkan satu atau beberapa riwayat pendidikan.</p></div><button id="add-education" class="rounded-lg border border-yellow-400/30 px-3 py-2 text-xs text-yellow-300 hover:bg-yellow-400/10" type="button">＋ Tambah pendidikan</button></div>
+                    <div id="admin-education-list" class="space-y-3"></div>
+                  </div>
+                  <div class="mt-6 border-t border-white/10 pt-5">
+                    <div class="mb-3 flex flex-wrap items-center justify-between gap-3"><div><h4 class="text-sm font-semibold text-gray-200">Sertifikat</h4><p class="mt-1 text-xs text-gray-500">Gunakan gambar landscape (lebar lebih besar daripada tinggi), maksimal 10 MB.</p></div><button id="add-certificate" class="rounded-lg border border-yellow-400/30 px-3 py-2 text-xs text-yellow-300 hover:bg-yellow-400/10" type="button">＋ Tambah sertifikat</button></div>
+                    <div id="admin-certificates-list" class="space-y-3"></div>
+                  </div>
+                  <input name="aboutEducation" type="hidden"><input name="aboutCertificates" type="hidden">
+                </div>
                 <div class="rounded-xl border border-white/10 bg-[#151a24] p-5"><h3 class="mb-4 text-sm font-semibold text-yellow-400">Galeri, lagu & kontak</h3><div class="grid gap-4 sm:grid-cols-2">
                   <label class="text-xs text-gray-400">Judul proyek<input class="admin-input mt-2" name="projectsHeading" maxlength="100"></label><label class="text-xs text-gray-400">Deskripsi bagian proyek<input class="admin-input mt-2" name="projectsDescription" maxlength="250"></label>
                   <label class="text-xs text-gray-400">Judul galeri<input class="admin-input mt-2" name="galleryHeading" maxlength="80"></label>
@@ -235,7 +302,16 @@
                   <label class="text-xs text-gray-400">Judul bagian tautan<input class="admin-input mt-2" name="linksHeading" maxlength="80"></label><label class="text-xs text-gray-400">Judul kontak<input class="admin-input mt-2" name="contactHeading" maxlength="80"></label>
                   <label class="text-xs text-gray-400 sm:col-span-2">Deskripsi kontak<textarea class="admin-input mt-2 min-h-20" name="contactDescription" maxlength="400"></textarea></label>
                 </div></div>
-                <div class="rounded-xl border border-white/10 bg-[#151a24] p-5"><h3 class="mb-4 text-sm font-semibold text-yellow-400">Warna situs</h3><div class="grid gap-4 sm:grid-cols-2"><label class="text-xs text-gray-400">Warna aksen<input class="admin-input mt-2 h-12 p-1" name="accentColor" type="color"></label><label class="text-xs text-gray-400">Warna latar utama<input class="admin-input mt-2 h-12 p-1" name="backgroundColor" type="color"></label></div></div>
+                <div class="rounded-xl border border-white/10 bg-[#151a24] p-5">
+                  <h3 class="mb-2 text-sm font-semibold text-yellow-400">Tema neon</h3><p class="mb-4 text-xs leading-5 text-gray-500">Atur warna utama, warna neon pendamping, cahaya, dan latar. Perubahan warna langsung terlihat sebagai pratinjau.</p>
+                  <div class="grid gap-4 sm:grid-cols-2">
+                    <label class="text-xs text-gray-400">Aksen utama<input class="admin-input theme-color-input mt-2 h-12 p-1" name="accentColor" type="color"><span class="mt-1 block text-[11px] text-gray-500">Tombol, tautan, dan sorotan</span></label>
+                    <label class="text-xs text-gray-400">Neon pendamping<input class="admin-input theme-color-input mt-2 h-12 p-1" name="neonSecondaryColor" type="color"><span class="mt-1 block text-[11px] text-gray-500">Label dan detail dekoratif</span></label>
+                    <label class="text-xs text-gray-400">Warna glow<input class="admin-input theme-color-input mt-2 h-12 p-1" name="neonGlowColor" type="color"><span class="mt-1 block text-[11px] text-gray-500">Cahaya dan efek bingkai</span></label>
+                    <label class="text-xs text-gray-400">Latar belakang<input class="admin-input theme-color-input mt-2 h-12 p-1" name="backgroundColor" type="color"><span class="mt-1 block text-[11px] text-gray-500">Dasar warna seluruh halaman</span></label>
+                  </div>
+                  <div class="mt-5 flex items-center gap-3 rounded-xl border border-white/10 bg-[#0d1119] p-4"><span class="h-8 w-8 rounded-full" style="background:var(--gold);box-shadow:0 0 16px color-mix(in srgb,var(--gold) 55%,transparent)"></span><span class="h-8 w-8 rounded-full" style="background:var(--neon-secondary);box-shadow:0 0 16px color-mix(in srgb,var(--neon-secondary) 55%,transparent)"></span><span class="h-8 w-8 rounded-full" style="background:var(--neon-glow);box-shadow:0 0 16px color-mix(in srgb,var(--neon-glow) 55%,transparent)"></span><span class="ml-auto text-xs text-gray-500">Pratinjau palet</span></div>
+                </div>
                 <input name="homeSectionOrder" type="hidden">
                 <input name="homeProjectIds" type="hidden">
                 <input name="homeGalleryIds" type="hidden">
@@ -243,6 +319,7 @@
                   <h3 class="mb-2 text-sm font-semibold text-yellow-400">Bagian yang ditampilkan</h3><p class="mb-4 text-xs text-gray-500">Pilih bagian yang ingin tampil di halaman utama.</p>
                   <div class="grid gap-3 sm:grid-cols-2">
                     <label class="flex items-center gap-3 text-sm text-gray-300"><input class="accent-yellow-400" name="showHero" type="checkbox">Profil utama</label>
+                    <label class="flex items-center gap-3 text-sm text-gray-300"><input class="accent-yellow-400" name="showAbout" type="checkbox">Tentang saya</label>
                     <label class="flex items-center gap-3 text-sm text-gray-300"><input class="accent-yellow-400" name="showProjects" type="checkbox">Proyek</label>
                     <label class="flex items-center gap-3 text-sm text-gray-300"><input class="accent-yellow-400" name="showGallery" type="checkbox">Galeri foto</label>
                     <label class="flex items-center gap-3 text-sm text-gray-300"><input class="accent-yellow-400" name="showSongs" type="checkbox">Bagian lagu</label>
@@ -279,6 +356,14 @@
         siteName:"ZAKI ANSYARI",heroHeading:"Hi, I'm",heroName:"ZAKI",navHome:"Home",navProjects:"Projects",navGallery:"Gallery",navSongs:"Songs",navContact:"Contact",
         heroQuote:"Hari terbesar dalam hidup Anda dan saya adalah ketika kita bertanggung jawab penuh atas sikap kita.",
         profileImage:"assets/profile.jpeg",primaryButton:"HIRE ME",secondaryButton:"GALERY",email:"zakiansyari@gmail.com",
+        aboutEyebrow:"Kenali lebih dekat",aboutHeading:"Tentang Saya",aboutDescription:"Perjalanan, hal yang saya pelajari, dan pencapaian yang saya banggakan.",
+        aboutGreeting:"Halo, saya Zaki",educationHeading:"Pendidikan",skillsHeading:"Keahlian & minat",
+        certificatesEyebrow:"Perjalanan & pencapaian",certificatesHeading:"Sertifikat & Pencapaian",certificatesDescription:"Kumpulan pengalaman yang berarti",
+        aboutBioHeading:"Senang belajar, berkarya, dan terus berkembang.",
+        aboutBio:"Saya Zaki Ansyari, pelajar di SMK Negeri 1 Amuntai. Saya tertarik pada teknologi dan pengembangan website, serta senang mengubah ide menjadi karya yang bermanfaat. Bagi saya, setiap proyek dan pengalaman baru adalah kesempatan untuk belajar lebih baik.",
+        aboutEducation:JSON.stringify([{school:"SMK Negeri 1 Amuntai",program:"Pendidikan menengah kejuruan",period:"",description:"Menyusun laporan Praktik Kerja Lapangan (PKL) sebagai bagian dari perjalanan belajar."}]),
+        aboutSkills:"Pengembangan website, HTML & CSS, JavaScript, Google Sheets, Dokumentasi proyek, Komunikasi publik",
+        aboutCertificates:"[]",
         projectsHeading:"Proyek yang Pernah Saya Kerjakan",projectsDescription:"Beberapa proyek dan pengalaman yang pernah saya kerjakan.",
         galleryHeading:"My Gallery",
         songsHeading:"SONGS ♫",songsQuote:"Tidak perlu memiliki kemampuan atau kekuatan super untuk merasakan cinta. Yang dibutuhkan hanyalah menjadi diri sendiri.",
@@ -286,8 +371,8 @@
         spotifyUrl:"https://open.spotify.com/embed/track/6RUKPb4LETWmmr3iAEQktW?utm_source=generator",
         linksHeading:"Ruang lainnya",contactHeading:"Hubungi Saya",
         contactDescription:"Punya pertanyaan atau ingin menyampaikan sesuatu? Kirimkan pesan kepada saya.",
-        accentColor:"#eab308",backgroundColor:"#10141e",showHero:true,showProjects:true,showGallery:true,showSongs:true,showLinks:true,showContact:true,
-        homeSectionOrder:"home,projects,gallery,songs,links,contact"
+        navAbout:"Tentang",accentColor:"#00f5d4",neonSecondaryColor:"#b026ff",neonGlowColor:"#ff2bd6",backgroundColor:"#080b16",showHero:true,showAbout:true,showProjects:true,showGallery:true,showSongs:true,showLinks:true,showContact:true,
+        homeSectionOrder:"home,about,projects,gallery,songs,links,contact"
       },
       projects:[],
       gallery:[
@@ -309,6 +394,7 @@
     const state={settings:{...DEFAULTS.settings},projects:[],gallery:DEFAULTS.gallery.map(item=>({...item})),links:DEFAULTS.links.map(item=>({...item})),messages:[],token:sessionStorage.getItem("zaki_admin_token")||"",username:sessionStorage.getItem("zaki_admin_user")||"",panel:"overview"};
     const HOME_SECTIONS=[
       {id:"home",label:"Profil utama",navId:"nav-home",showKey:"showHero"},
+      {id:"about",label:"Tentang saya",navId:"nav-about",showKey:"showAbout"},
       {id:"projects",label:"Proyek",navId:"nav-projects",showKey:"showProjects"},
       {id:"gallery",label:"Galeri foto",navId:"nav-gallery",showKey:"showGallery"},
       {id:"songs",label:"Bagian lagu",navId:"nav-songs",showKey:"showSongs"},
@@ -327,11 +413,7 @@
       const el=document.createElement("div");el.className="toast rounded-lg border px-4 py-3 text-sm shadow-lg "+(error?"border-red-300/20 bg-[#241417] text-red-100":"border-emerald-300/20 bg-[#111c18] text-gray-100");
       el.textContent=message;$("#toast-root").append(el);setTimeout(()=>el.remove(),4000);
     }
-    function setSyncStatus(message) {
-      $("#sync-status").textContent=message;
-    }
-    function hideInitialLoader(message) {
-      setSyncStatus(message);
+    function hideInitialLoader() {
       const loader=$("#initial-loader");
       loader.classList.add("leaving");
       window.setTimeout(()=>loader.remove(),450);
@@ -443,24 +525,19 @@
       });
     }
     function applySettings() {
-      const s=state.settings,root=document.documentElement;
-      root.style.setProperty("--gold",s.accentColor||DEFAULTS.settings.accentColor);
-      root.style.setProperty("--gold-deep",s.accentColor||DEFAULTS.settings.accentColor);
-      root.style.setProperty("--ink",s.backgroundColor||DEFAULTS.settings.backgroundColor);
-      document.body.style.backgroundColor=s.backgroundColor||DEFAULTS.settings.backgroundColor;
-      const base=s.backgroundColor||DEFAULTS.settings.backgroundColor;
-      document.querySelectorAll(".hero-section").forEach(el=>el.style.background=`linear-gradient(112deg,color-mix(in srgb,${base} 42%,#080b11) 0%,color-mix(in srgb,${base} 80%,#111827) 56%,color-mix(in srgb,${base} 65%,#192234) 100%)`);
-      document.querySelectorAll(".page-section").forEach(el=>el.style.background=`linear-gradient(130deg,color-mix(in srgb,${base} 80%,#121823),color-mix(in srgb,${base} 72%,#172131))`);
+      const s=state.settings;
+      applyTheme(s);
       $("#brand").textContent=s.siteName??"";$("#footer-name").textContent=s.siteName??"";document.title=s.siteName??"";
-      $("#nav-home").textContent=s.navHome??"";$("#nav-projects").textContent=s.navProjects??"";$("#nav-gallery").textContent=s.navGallery??"";
+      $("#nav-home").textContent=s.navHome??"";$("#nav-about").textContent=s.navAbout??"";$("#nav-projects").textContent=s.navProjects??"";$("#nav-gallery").textContent=s.navGallery??"";
       $("#nav-songs").textContent=s.navSongs??"";$("#nav-contact").textContent=s.navContact??"";
-      const mobileLabels={home:s.navHome,projects:s.navProjects,gallery:s.navGallery,songs:s.navSongs,contact:s.navContact};
+      const mobileLabels={home:s.navHome,about:s.navAbout,projects:s.navProjects,gallery:s.navGallery,songs:s.navSongs,contact:s.navContact};
       $("#mobile-nav").querySelectorAll("a").forEach(link=>{const sectionId=link.getAttribute("href").slice(1);link.textContent=mobileLabels[sectionId]??"";});
       $("#hero-heading").textContent=s.heroHeading;$("#hero-name").textContent=s.heroName;$("#hero-quote").textContent=s.heroQuote;
       $("#hero-primary").textContent=s.primaryButton??"";$("#hero-secondary").textContent=s.secondaryButton??"";
       $("#hero-primary").href="#contact";$("#hero-secondary").href="#gallery";$("#hero-primary").classList.toggle("hidden-view",!s.primaryButton);$("#hero-secondary").classList.toggle("hidden-view",!s.secondaryButton);
       $("#brand").classList.toggle("hidden-view",!s.siteName);
       const profileImage=validUrl(s.profileImage);$("#profile-image").src=profileImage;$("#profile-image").alt=s.heroName?"Foto profil "+s.heroName:"";$("#profile-image").classList.toggle("hidden-view",!profileImage);
+      renderAboutContent(s);
       $("#projects-heading").textContent=s.projectsHeading??"";$("#projects-description").textContent=s.projectsDescription??"";
       $("#gallery-heading").textContent=s.galleryHeading??"";
       $("#songs-heading").textContent=s.songsHeading;$("#songs-quote").textContent=s.songsQuote;$("#songs-caption").textContent=s.songsCaption;
@@ -473,8 +550,43 @@
       $("#songs").classList.toggle("hidden-view",!s.showSongs);
       $("#links").classList.toggle("hidden-view",!s.showLinks);$("#contact").classList.toggle("hidden-view",!s.showContact);
       $("#home").classList.toggle("hidden-view",!s.showHero);
+      $("#about").classList.toggle("hidden-view",!s.showAbout);
       applyHomeLayout(s);
       renderGallery();renderLinks();
+    }
+    function parseSettingList(value,fallback=[]) {
+      if(Array.isArray(value))return value.filter(item=>item&&typeof item==="object"&&!Array.isArray(item));
+      if(typeof value!=="string"||!value.trim())return fallback;
+      try {
+        const parsed=JSON.parse(value);
+        return Array.isArray(parsed)?parsed.filter(item=>item&&typeof item==="object"&&!Array.isArray(item)):fallback;
+      } catch(error) {
+        console.warn("Data bagian tentang tidak valid; menggunakan konten bawaan.",error.message);
+        return fallback;
+      }
+    }
+    function renderAboutContent(settings) {
+      $("#about-eyebrow").textContent=settings.aboutEyebrow??"";
+      $("#about-heading").textContent=settings.aboutHeading??"";
+      $("#about-description").textContent=settings.aboutDescription??"";
+      $("#about-greeting").textContent=settings.aboutGreeting??"";
+      $("#about-bio-heading").textContent=settings.aboutBioHeading??"";
+      $("#about-bio").textContent=settings.aboutBio??"";
+      $("#education-heading").textContent=settings.educationHeading??"";
+      $("#skills-heading").textContent=settings.skillsHeading??"";
+      $("#certificates-eyebrow").textContent=settings.certificatesEyebrow??"";
+      $("#certificates-heading").textContent=settings.certificatesHeading??"";
+      $("#certificates-description").textContent=settings.certificatesDescription??"";
+      const education=parseSettingList(settings.aboutEducation,parseSettingList(DEFAULTS.settings.aboutEducation));
+      $("#education-list").innerHTML=education.filter(item=>item.school||item.program||item.period||item.description).map(item=>`<div class="flex gap-4"><span class="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-yellow-400/10 text-lg text-yellow-300">✦</span><div class="min-w-0"><h3 class="font-semibold text-white">${esc(item.school||"")}</h3>${item.program?`<p class="mt-1 text-sm text-gray-400">${esc(item.program)}</p>`:""}${item.period?`<p class="mt-1 text-xs text-yellow-300">${esc(item.period)}</p>`:""}${item.description?`<p class="mt-3 whitespace-pre-line text-xs leading-5 text-gray-500">${esc(item.description)}</p>`:""}</div></div>`).join("");
+      $("#education-card").classList.toggle("hidden-view",!$("#education-list").innerHTML);
+      const skills=String(settings.aboutSkills??"").split(",").map(skill=>skill.trim()).filter(Boolean);
+      $("#skills-list").innerHTML=skills.map(skill=>`<span class="skill-chip">${esc(skill)}</span>`).join("");
+      $("#skills-card").classList.toggle("hidden-view",!skills.length);
+      const certificates=parseSettingList(settings.aboutCertificates);
+      const validCertificates=certificates.filter(item=>item.title&&validUrl(item.image));
+      $("#certificates-list").innerHTML=validCertificates.map(item=>`<article class="overflow-hidden rounded-2xl border border-yellow-400/20 bg-[#0c111a]/75"><a class="block bg-black/20" href="${esc(validUrl(item.image))}" target="_blank" rel="noreferrer" aria-label="Lihat sertifikat ${esc(item.title)}"><img src="${esc(validUrl(item.image))}" alt="Sertifikat ${esc(item.title)}" class="aspect-[1.414/1] w-full bg-[#090c12] object-contain" loading="lazy"></a><div class="p-5"><h4 class="serif text-lg font-bold">${esc(item.title)}</h4>${item.issuer?`<p class="mt-1 text-sm text-gray-400">${esc(item.issuer)}</p>`:""}${item.year?`<p class="mt-2 text-xs text-yellow-300">${esc(item.year)}</p>`:""}</div></article>`).join("");
+      $("#certificates-section").classList.toggle("hidden-view",!validCertificates.length);
     }
     function spotifyEmbed(value) {
       if(!value)return "";
@@ -563,17 +675,34 @@
         return `<article class="rounded-xl border border-white/10 bg-[#151a24] p-5"><div class="flex flex-wrap items-start justify-between gap-3"><div class="min-w-0"><h3 class="font-semibold">${esc(message.name||"Tanpa nama")}</h3><a class="mt-1 inline-block break-all text-xs text-yellow-300 hover:text-yellow-200" href="mailto:${esc(email)}">${esc(email)}</a></div><div class="flex items-center gap-3"><time class="text-[11px] text-gray-500">${esc(dateLabel)}</time><button class="delete-message rounded-md border border-white/10 px-2.5 py-1.5 text-xs text-red-300 hover:border-red-300/30" data-id="${esc(message.id)}">Hapus</button></div></div><p class="mt-4 whitespace-pre-wrap break-words text-sm leading-6 text-gray-300">${esc(message.message)}</p></article>`;
       }).join("")||'<div class="rounded-xl border border-dashed border-white/15 px-5 py-12 text-center text-sm text-gray-400">Belum ada pesan masuk.</div>';
     }
+    function renderAdminEducation(items) {
+      $("#admin-education-list").innerHTML=items.map(item=>`<div class="admin-education-item rounded-lg border border-white/10 bg-[#0d1119] p-4"><div class="mb-3 flex items-center justify-between"><span class="text-xs font-semibold text-gray-300">Riwayat pendidikan</span><button class="remove-education text-xs text-red-300 hover:text-red-200" type="button">Hapus</button></div><div class="grid gap-3 sm:grid-cols-2"><label class="text-xs text-gray-400">Nama sekolah<input class="admin-input mt-2" data-field="school" maxlength="120" value="${esc(item.school||"")}"></label><label class="text-xs text-gray-400">Jurusan / jenjang<input class="admin-input mt-2" data-field="program" maxlength="120" value="${esc(item.program||"")}"></label><label class="text-xs text-gray-400">Periode<input class="admin-input mt-2" data-field="period" maxlength="60" value="${esc(item.period||"")}" placeholder="Contoh: 2023–2026"></label><label class="text-xs text-gray-400 sm:col-span-2">Keterangan<textarea class="admin-input mt-2 min-h-16" data-field="description" maxlength="400">${esc(item.description||"")}</textarea></label></div></div>`).join("");
+    }
+    function renderAdminCertificates(items) {
+      $("#admin-certificates-list").innerHTML=items.map(item=>`<div class="admin-certificate-item rounded-lg border border-white/10 bg-[#0d1119] p-4"><div class="mb-3 flex items-center justify-between"><span class="text-xs font-semibold text-gray-300">Detail sertifikat</span><button class="remove-certificate text-xs text-red-300 hover:text-red-200" type="button">Hapus</button></div><div class="grid gap-3 sm:grid-cols-2"><label class="text-xs text-gray-400">Nama sertifikat<input class="admin-input mt-2" data-field="title" maxlength="120" value="${esc(item.title||"")}"></label><label class="text-xs text-gray-400">Penerbit / penyelenggara<input class="admin-input mt-2" data-field="issuer" maxlength="120" value="${esc(item.issuer||"")}"></label><label class="text-xs text-gray-400">Tahun<input class="admin-input mt-2" data-field="year" maxlength="20" value="${esc(item.year||"")}"></label><div class="text-xs text-gray-400">Gambar sertifikat<span class="mt-2 flex flex-wrap items-center gap-2"><button class="upload-certificate-image rounded-lg border border-white/10 px-3 py-2 text-xs text-gray-300 hover:border-yellow-400/50" type="button">${item.image?"Ganti gambar":"Pilih gambar"}</button><input class="certificate-image-file hidden" type="file" accept="image/*"><input data-field="image" type="hidden" value="${esc(item.image||"")}"><span class="certificate-upload-status text-[11px] text-gray-500">${item.image?"Gambar siap disimpan.":"Harus landscape, maksimal 10 MB."}</span></span></div></div></div>`).join("");
+    }
+    function syncAboutAdminFields() {
+      const education=[...document.querySelectorAll(".admin-education-item")].map(row=>Object.fromEntries(["school","program","period","description"].map(key=>[key,row.querySelector(`[data-field="${key}"]`).value.trim()]))).filter(item=>Object.values(item).some(Boolean));
+      const certificates=[...document.querySelectorAll(".admin-certificate-item")].map(row=>Object.fromEntries(["title","issuer","year","image"].map(key=>[key,row.querySelector(`[data-field="${key}"]`).value.trim()]))).filter(item=>Object.values(item).some(Boolean));
+      if(certificates.some(item=>!item.title||!item.image))throw new Error("Lengkapi nama dan gambar landscape untuk setiap sertifikat.");
+      $("#settings-form").elements.namedItem("aboutEducation").value=JSON.stringify(education);
+      $("#settings-form").elements.namedItem("aboutCertificates").value=JSON.stringify(certificates);
+    }
+    function fillAboutAdminFields(settings) {
+      renderAdminEducation(parseSettingList(settings.aboutEducation,parseSettingList(DEFAULTS.settings.aboutEducation)));
+      renderAdminCertificates(parseSettingList(settings.aboutCertificates));
+    }
     function fillSettingsForm() {
       const form=$("#settings-form"),s=state.settings;
       for(const [key,value] of Object.entries(s)){const input=form.elements.namedItem(key);if(!input)continue;if(input.type==="checkbox")input.checked=Boolean(value);else input.value=value??"";}
+      fillAboutAdminFields(s);
       renderHomeLayoutControls(s.homeSectionOrder);
     }
     async function loadPublicData() {
       if(!API_ENABLED)return true;
-      setSyncStatus("Menyinkronkan konten dengan Google Sheets...");
       try {
         const data=await api("publicData");
-        if(data.settings&&typeof data.settings==="object")state.settings={...state.settings,...data.settings};
+        if(data.settings&&typeof data.settings==="object")state.settings={...state.settings,...themeSettings(data.settings)};
         if(Array.isArray(data.projects))state.projects=data.projects;
         if(Array.isArray(data.gallery))state.gallery=data.gallery;
         if(Array.isArray(data.links))state.links=data.links;
@@ -587,7 +716,7 @@
     async function loadAdminData() {
       try {
         const data=await api("adminData");
-        if(data.settings&&typeof data.settings==="object")state.settings={...state.settings,...data.settings};
+        if(data.settings&&typeof data.settings==="object")state.settings={...state.settings,...themeSettings(data.settings)};
         if(Array.isArray(data.projects))state.projects=data.projects;
         if(Array.isArray(data.gallery))state.gallery=data.gallery;
         if(Array.isArray(data.links))state.links=data.links;
@@ -627,6 +756,24 @@
       $("#admin-page-title").textContent=title;$("#admin-breadcrumb").textContent=title;
       $("#admin-sidebar").classList.remove("open");$("#admin-shade").classList.remove("open");
       if(panel==="messages"&&state.token)loadAdminData();
+    }
+    function themeSettings(settings) {
+      const migrated={...settings};
+      if(String(migrated.accentColor||"").toLowerCase()==="#eab308")migrated.accentColor=DEFAULTS.settings.accentColor;
+      if(String(migrated.backgroundColor||"").toLowerCase()==="#10141e")migrated.backgroundColor=DEFAULTS.settings.backgroundColor;
+      return migrated;
+    }
+    function applyTheme(settings) {
+      const color=(key)=>/^#[0-9a-f]{6}$/i.test(settings[key]||"")?settings[key]:DEFAULTS.settings[key];
+      const root=document.documentElement;
+      const accent=color("accentColor"),secondary=color("neonSecondaryColor"),glow=color("neonGlowColor"),background=color("backgroundColor");
+      root.style.setProperty("--gold",accent);
+      root.style.setProperty("--gold-deep",accent);
+      root.style.setProperty("--neon-secondary",secondary);
+      root.style.setProperty("--neon-glow",glow);
+      root.style.setProperty("--ink",background);
+      document.body.style.backgroundColor=background;
+      document.querySelector('meta[name="theme-color"]').content=background;
     }
     async function saveItem(type,item,id) {
       const result=await api("saveItem",{type,item:{...item,...(id?{id}:{})}});
@@ -681,11 +828,9 @@
     $("#copyright-year").textContent=new Date().getFullYear();
     applySettings();renderAdminTables();observeReveals();window.addEventListener("hashchange",route);
     async function initializePage() {
-      setSyncStatus(API_ENABLED?"Menghubungkan ke Google Sheets...":"Menyiapkan portofolio...");
-      const synced=await loadPublicData();
-      setSyncStatus(synced?"Memuat tampilan website...":"Koneksi tidak tersedia, menyiapkan konten bawaan...");
+      await loadPublicData();
       await route();
-      hideInitialLoader(synced?"Portofolio siap":"Portofolio siap dengan konten bawaan");
+      hideInitialLoader();
     }
     initializePage();
     function setMobileNavOpen(open) {
@@ -709,14 +854,57 @@
       catch(error){toast(error.message,true);}
       finally{button.disabled=false;button.textContent="Masuk ke dashboard →";}
     });
+    $("#add-education").addEventListener("click",()=>renderAdminEducation([...document.querySelectorAll(".admin-education-item")].map(row=>Object.fromEntries(["school","program","period","description"].map(key=>[key,row.querySelector(`[data-field="${key}"]`).value]))).concat({school:"",program:"",period:"",description:""})));
+    $("#add-certificate").addEventListener("click",()=>renderAdminCertificates([...document.querySelectorAll(".admin-certificate-item")].map(row=>Object.fromEntries(["title","issuer","year","image"].map(key=>[key,row.querySelector(`[data-field="${key}"]`).value]))).concat({title:"",issuer:"",year:"",image:""})));
+    $("#settings-form").addEventListener("click",event=>{
+      const removeEducation=event.target.closest(".remove-education");
+      if(removeEducation){removeEducation.closest(".admin-education-item").remove();return;}
+      const removeCertificate=event.target.closest(".remove-certificate");
+      if(removeCertificate){removeCertificate.closest(".admin-certificate-item").remove();return;}
+      const uploadButton=event.target.closest(".upload-certificate-image");
+      if(uploadButton)uploadButton.closest(".admin-certificate-item").querySelector(".certificate-image-file").click();
+    });
+    $("#settings-form").addEventListener("change",async event=>{
+      const fileInput=event.target.closest(".certificate-image-file"),file=fileInput?.files[0];
+      if(!fileInput||!file)return;
+      const row=fileInput.closest(".admin-certificate-item"),button=row.querySelector(".upload-certificate-image"),status=row.querySelector(".certificate-upload-status");
+      button.disabled=true;status.textContent="Memeriksa gambar...";
+      try {
+        const dimensions=await new Promise((resolve,reject)=>{
+          const image=new Image(),url=URL.createObjectURL(file);
+          image.onload=()=>{URL.revokeObjectURL(url);resolve({width:image.naturalWidth,height:image.naturalHeight});};
+          image.onerror=()=>{URL.revokeObjectURL(url);reject(new Error("File gambar tidak dapat dibaca."));};
+          image.src=url;
+        });
+        if(dimensions.width<=dimensions.height)throw new Error("Pilih sertifikat dengan posisi landscape (lebar gambar harus lebih besar daripada tingginya).");
+        status.textContent="Mengunggah gambar...";
+        row.querySelector('[data-field="image"]').value=await uploadImage(file,"certificates");
+        status.textContent="Gambar landscape siap disimpan.";
+        button.textContent="Ganti gambar";
+        toast("Sertifikat berhasil diunggah. Tekan Simpan tampilan untuk menerapkannya.");
+      } catch(error) {
+        status.textContent="Gagal mengunggah gambar.";
+        toast(error.message,true);
+      } finally {
+        button.disabled=false;fileInput.value="";
+      }
+    });
     $("#settings-form").addEventListener("submit",async event=>{
       event.preventDefault();const form=event.currentTarget,settings={};
+      try{syncAboutAdminFields();}catch(error){toast(error.message,true);return;}
       for(const [key,value] of new FormData(form).entries())settings[key]=value;
       for(const input of form.querySelectorAll('input[type="checkbox"]'))settings[input.name]=input.checked;
       for(const key of ["profileImage","spotifyUrl"])if(settings[key]&&!validUrl(settings[key])){toast("Periksa URL pada pengaturan "+key+".",true);return;}
-      settings.accentColor=settings.accentColor||DEFAULTS.settings.accentColor;settings.backgroundColor=settings.backgroundColor||DEFAULTS.settings.backgroundColor;
+      for(const key of ["accentColor","neonSecondaryColor","neonGlowColor","backgroundColor"])if(!/^#[0-9a-f]{6}$/i.test(settings[key]||"")){toast("Pilih warna yang valid pada pengaturan tema.",true);return;}
       try{await api("saveSettings",{settings});state.settings={...state.settings,...settings};applySettings();fillSettingsForm();toast("Tampilan website berhasil diperbarui.");}
       catch(error){toast(error.message,true);}
+    });
+    $("#settings-form").addEventListener("input",event=>{
+      if(event.target.matches(".theme-color-input")){
+        const preview={...state.settings};
+        for(const input of document.querySelectorAll(".theme-color-input"))preview[input.name]=input.value;
+        applyTheme(preview);
+      }
     });
     $("#home-layout-list").addEventListener("click",event=>{
       const button=event.target.closest(".home-layout-move");if(!button)return;
