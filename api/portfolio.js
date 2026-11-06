@@ -79,7 +79,7 @@ async function createCloudinarySignature(payload, endpoint, response) {
   }
 
   const folder = payload.folder;
-  if (!["gallery", "projects", "profile"].includes(folder)) {
+  if (!["gallery", "projects", "profile", "certificates"].includes(folder)) {
     return response.status(400).json({ ok: false, error: "Folder upload tidak valid." });
   }
   if (typeof payload.token !== "string" || !payload.token) {
