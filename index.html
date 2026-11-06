@@ -237,9 +237,13 @@
         <aside id="admin-sidebar" class="admin-sidebar flex w-64 shrink-0 flex-col px-4 py-5">
           <div class="flex items-center justify-between px-3"><a href="#" class="font-bold tracking-wide text-yellow-400">ZAKI ANSYARI</a><button id="close-admin-menu" class="text-gray-400 md:hidden" aria-label="Tutup menu">✕</button></div>
           <p class="px-3 pb-2 pt-10 text-[10px] font-semibold uppercase tracking-[.18em] text-gray-600">Kelola website</p>
-          <nav class="space-y-1">
+          <nav class="min-h-0 flex-1 space-y-1 overflow-y-auto">
             <button class="admin-link active w-full rounded-lg px-3 py-3 text-left text-sm text-gray-400" data-panel="overview">◫ <span class="ml-2">Ringkasan</span></button>
-            <button class="admin-link w-full rounded-lg px-3 py-3 text-left text-sm text-gray-400" data-panel="settings">⚙ <span class="ml-2">Tampilan website</span></button>
+            <button class="admin-link w-full rounded-lg px-3 py-3 text-left text-sm text-gray-400" data-panel="settings-profile">◉ <span class="ml-2">Profil & identitas</span></button>
+            <button class="admin-link w-full rounded-lg px-3 py-3 text-left text-sm text-gray-400" data-panel="settings-about">✦ <span class="ml-2">Tentang & pendidikan</span></button>
+            <button class="admin-link w-full rounded-lg px-3 py-3 text-left text-sm text-gray-400" data-panel="settings-content">▤ <span class="ml-2">Konten halaman</span></button>
+            <button class="admin-link w-full rounded-lg px-3 py-3 text-left text-sm text-gray-400" data-panel="settings-theme">◈ <span class="ml-2">Tema & warna</span></button>
+            <button class="admin-link w-full rounded-lg px-3 py-3 text-left text-sm text-gray-400" data-panel="settings-layout">☷ <span class="ml-2">Bagian & urutan</span></button>
             <button class="admin-link w-full rounded-lg px-3 py-3 text-left text-sm text-gray-400" data-panel="projects">◇ <span class="ml-2">Proyek</span></button>
             <button class="admin-link w-full rounded-lg px-3 py-3 text-left text-sm text-gray-400" data-panel="gallery">▧ <span class="ml-2">Galeri foto</span></button>
             <button class="admin-link w-full rounded-lg px-3 py-3 text-left text-sm text-gray-400" data-panel="links">↗ <span class="ml-2">Tautan</span></button>
@@ -253,11 +257,12 @@
             <section id="panel-overview" class="admin-panel">
               <p class="mb-5 text-sm text-gray-400">Atur informasi dan konten yang tampil di halaman publik.</p>
               <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4"><div class="rounded-xl border border-white/10 bg-[#151a24] p-5"><p class="text-xs text-gray-500">Proyek</p><p id="stat-projects" class="serif mt-2 text-3xl font-bold">—</p></div><div class="rounded-xl border border-white/10 bg-[#151a24] p-5"><p class="text-xs text-gray-500">Foto galeri</p><p id="stat-gallery" class="serif mt-2 text-3xl font-bold">—</p></div><div class="rounded-xl border border-white/10 bg-[#151a24] p-5"><p class="text-xs text-gray-500">Tautan tambahan</p><p id="stat-links" class="serif mt-2 text-3xl font-bold">—</p></div><div class="rounded-xl border border-white/10 bg-[#151a24] p-5"><p class="text-xs text-gray-500">Penyimpanan</p><p id="connection-status" class="mt-3 text-lg font-semibold text-emerald-300">Google Sheets</p></div></div>
-              <div class="mt-6 rounded-xl border border-white/10 bg-[#151a24] p-5 sm:p-6"><div class="flex flex-wrap items-center justify-between gap-3"><div><h2 class="font-semibold">Pengaturan cepat</h2><p class="mt-1 text-xs text-gray-500">Ubah profil atau kelola konten halaman.</p></div><button class="go-panel rounded-lg border border-white/10 px-3 py-2 text-xs text-gray-300 hover:border-yellow-400/50" data-target="settings">Atur tampilan →</button></div><div class="mt-5 flex flex-wrap gap-2"><button class="go-panel rounded-lg bg-yellow-400 px-4 py-2 text-xs font-semibold text-gray-950" data-target="projects">Kelola proyek</button><button class="go-panel rounded-lg border border-white/10 px-4 py-2 text-xs text-gray-300" data-target="gallery">Kelola foto</button><button class="go-panel rounded-lg border border-white/10 px-4 py-2 text-xs text-gray-300" data-target="links">Kelola tautan</button></div></div>
+              <div class="mt-6 rounded-xl border border-white/10 bg-[#151a24] p-5 sm:p-6"><div class="flex flex-wrap items-center justify-between gap-3"><div><h2 class="font-semibold">Pengaturan cepat</h2><p class="mt-1 text-xs text-gray-500">Pilih bagian website yang ingin diatur.</p></div><button class="go-panel rounded-lg border border-white/10 px-3 py-2 text-xs text-gray-300 hover:border-yellow-400/50" data-target="settings-profile">Atur profil →</button></div><div class="mt-5 flex flex-wrap gap-2"><button class="go-panel rounded-lg bg-yellow-400 px-4 py-2 text-xs font-semibold text-gray-950" data-target="projects">Kelola proyek</button><button class="go-panel rounded-lg border border-white/10 px-4 py-2 text-xs text-gray-300" data-target="gallery">Kelola foto</button><button class="go-panel rounded-lg border border-white/10 px-4 py-2 text-xs text-gray-300" data-target="links">Kelola tautan</button></div></div>
             </section>
             <section id="panel-settings" class="admin-panel hidden-view">
-              <div class="mb-5"><h2 class="font-semibold">Tampilan website</h2><p class="mt-1 text-xs text-gray-500">Semua perubahan akan terlihat di halaman utama setelah disimpan.</p></div>
+              <div class="mb-5"><h2 class="font-semibold">Pengaturan website</h2><p class="mt-1 text-xs text-gray-500">Pilih menu di sidebar untuk mengatur bagian tertentu. Simpan perubahan dari tab mana pun.</p></div>
               <form id="settings-form" class="space-y-5">
+                <div data-settings-group="profile">
                 <div class="rounded-xl border border-white/10 bg-[#151a24] p-5"><h3 class="mb-4 text-sm font-semibold text-yellow-400">Identitas & hero</h3><div class="grid gap-4 sm:grid-cols-2">
                   <label class="text-xs text-gray-400">Nama/logo<input class="admin-input mt-2" name="siteName" maxlength="60"></label><label class="text-xs text-gray-400">Sapaan<input class="admin-input mt-2" name="heroHeading" maxlength="80"></label>
                   <label class="text-xs text-gray-400">Nama di judul hero<input class="admin-input mt-2" name="heroName" maxlength="60"></label><label class="text-xs text-gray-400">Alamat email<input class="admin-input mt-2" name="email" type="email" maxlength="200"></label>
@@ -268,6 +273,8 @@
                   <label class="text-xs text-gray-400 sm:col-span-2">Foto profil<input class="hidden" name="profileImage" type="hidden"><span class="mt-2 flex flex-wrap items-center gap-3"><button id="upload-profile-image" class="rounded-lg border border-white/10 px-3 py-2 text-xs text-gray-300 transition hover:border-yellow-400/50" type="button">Pilih atau ganti foto profil</button><button id="clear-profile-image" class="rounded-lg border border-white/10 px-3 py-2 text-xs text-gray-400 transition hover:border-red-300/40" type="button">Kosongkan foto</button><input id="profile-image-file" class="hidden" type="file" accept="image/*"><span class="text-[11px] text-gray-500">Pilih gambar dari perangkat, maksimal 10 MB.</span></span></label>
                   <label class="text-xs text-gray-400">Teks tombol utama<input class="admin-input mt-2" name="primaryButton" maxlength="30"></label><label class="text-xs text-gray-400">Teks tombol galeri<input class="admin-input mt-2" name="secondaryButton" maxlength="30"></label>
                 </div></div>
+                </div>
+                <div data-settings-group="about" class="hidden-view">
                 <div class="rounded-xl border border-white/10 bg-[#151a24] p-5"><h3 class="mb-4 text-sm font-semibold text-yellow-400">Tentang, pendidikan & sertifikat</h3>
                   <div class="grid gap-4 sm:grid-cols-2">
                     <label class="text-xs text-gray-400">Label kecil bagian tentang<input class="admin-input mt-2" name="aboutEyebrow" maxlength="60"></label>
@@ -293,6 +300,8 @@
                   </div>
                   <input name="aboutEducation" type="hidden"><input name="aboutCertificates" type="hidden">
                 </div>
+                </div>
+                <div data-settings-group="content" class="hidden-view">
                 <div class="rounded-xl border border-white/10 bg-[#151a24] p-5"><h3 class="mb-4 text-sm font-semibold text-yellow-400">Galeri, lagu & kontak</h3><div class="grid gap-4 sm:grid-cols-2">
                   <label class="text-xs text-gray-400">Judul proyek<input class="admin-input mt-2" name="projectsHeading" maxlength="100"></label><label class="text-xs text-gray-400">Deskripsi bagian proyek<input class="admin-input mt-2" name="projectsDescription" maxlength="250"></label>
                   <label class="text-xs text-gray-400">Judul galeri<input class="admin-input mt-2" name="galleryHeading" maxlength="80"></label>
@@ -302,6 +311,8 @@
                   <label class="text-xs text-gray-400">Judul bagian tautan<input class="admin-input mt-2" name="linksHeading" maxlength="80"></label><label class="text-xs text-gray-400">Judul kontak<input class="admin-input mt-2" name="contactHeading" maxlength="80"></label>
                   <label class="text-xs text-gray-400 sm:col-span-2">Deskripsi kontak<textarea class="admin-input mt-2 min-h-20" name="contactDescription" maxlength="400"></textarea></label>
                 </div></div>
+                </div>
+                <div data-settings-group="theme" class="hidden-view">
                 <div class="rounded-xl border border-white/10 bg-[#151a24] p-5">
                   <h3 class="mb-2 text-sm font-semibold text-yellow-400">Tema neon</h3><p class="mb-4 text-xs leading-5 text-gray-500">Atur warna utama, warna neon pendamping, cahaya, dan latar. Perubahan warna langsung terlihat sebagai pratinjau.</p>
                   <div class="grid gap-4 sm:grid-cols-2">
@@ -312,6 +323,8 @@
                   </div>
                   <div class="mt-5 flex items-center gap-3 rounded-xl border border-white/10 bg-[#0d1119] p-4"><span class="h-8 w-8 rounded-full" style="background:var(--gold);box-shadow:0 0 16px color-mix(in srgb,var(--gold) 55%,transparent)"></span><span class="h-8 w-8 rounded-full" style="background:var(--neon-secondary);box-shadow:0 0 16px color-mix(in srgb,var(--neon-secondary) 55%,transparent)"></span><span class="h-8 w-8 rounded-full" style="background:var(--neon-glow);box-shadow:0 0 16px color-mix(in srgb,var(--neon-glow) 55%,transparent)"></span><span class="ml-auto text-xs text-gray-500">Pratinjau palet</span></div>
                 </div>
+                </div>
+                <div data-settings-group="layout" class="hidden-view">
                 <input name="homeSectionOrder" type="hidden">
                 <input name="homeProjectIds" type="hidden">
                 <input name="homeGalleryIds" type="hidden">
@@ -330,6 +343,7 @@
                 <div class="rounded-xl border border-white/10 bg-[#151a24] p-5">
                   <h3 class="mb-2 text-sm font-semibold text-yellow-400">Urutan tata letak</h3><p class="mb-4 text-xs text-gray-500">Gunakan panah untuk mengatur urutan bagian di halaman utama.</p>
                   <ol id="home-layout-list" class="space-y-2"></ol>
+                </div>
                 </div>
                 <div class="flex justify-end"><button class="gold-button rounded-lg px-6 py-3 text-sm font-bold" type="submit">Simpan tampilan</button></div>
               </form>
@@ -749,10 +763,21 @@
       return true;
     }
     function setPanel(panel) {
+      if(panel==="settings")panel="settings-profile";
       state.panel=panel;
-      document.querySelectorAll(".admin-panel").forEach(el=>el.classList.toggle("hidden-view",el.id!=="panel-"+panel));
+      const settingsTabs={
+        "settings-profile":{group:"profile",title:"Profil & identitas"},
+        "settings-about":{group:"about",title:"Tentang & pendidikan"},
+        "settings-content":{group:"content",title:"Konten halaman"},
+        "settings-theme":{group:"theme",title:"Tema & warna"},
+        "settings-layout":{group:"layout",title:"Bagian & urutan"}
+      };
+      const settingsTab=settingsTabs[panel];
+      const panelId=settingsTab?"settings":panel;
+      document.querySelectorAll(".admin-panel").forEach(el=>el.classList.toggle("hidden-view",el.id!=="panel-"+panelId));
+      document.querySelectorAll("[data-settings-group]").forEach(el=>el.classList.toggle("hidden-view",!settingsTab||el.dataset.settingsGroup!==settingsTab.group));
       document.querySelectorAll(".admin-link").forEach(el=>el.classList.toggle("active",el.dataset.panel===panel));
-      const title={overview:"Ringkasan",settings:"Tampilan website",projects:"Proyek",gallery:"Galeri foto",links:"Tautan",messages:"Pesan masuk"}[panel]||"Ringkasan";
+      const title=settingsTab?.title||({overview:"Ringkasan",settings:"Profil & identitas",projects:"Proyek",gallery:"Galeri foto",links:"Tautan",messages:"Pesan masuk"}[panel]||"Ringkasan");
       $("#admin-page-title").textContent=title;$("#admin-breadcrumb").textContent=title;
       $("#admin-sidebar").classList.remove("open");$("#admin-shade").classList.remove("open");
       if(panel==="messages"&&state.token)loadAdminData();
